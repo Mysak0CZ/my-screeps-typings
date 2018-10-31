@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "target": "es6",
+        "sourceMap": false,
+        "declaration": true,
+        "strict": true,
+        "removeComments": false,
+        "baseUrl": "./typings/"
+    },
+    "include": ["./typings/**/*.ts"],
+    "exclude": ["node_modules", "examples"],
+    "typeAcquisition": {
+        "exclude": ["dom"]
+    }
+}
