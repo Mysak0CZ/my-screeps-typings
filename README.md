@@ -1,5 +1,5 @@
 # Screeps-typings
-TypeScript declarations for the game Screeps. In-game version 2018-9-22
+TypeScript declarations for the game Screeps. In-game version 2018-12-14
 
 > **These are not official typings for the Screeps game**
 

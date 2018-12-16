@@ -388,13 +388,13 @@ declare const CONTROLLER_STRUCTURES: { [type: string]: { [rcl: number]: number }
 /**
  * ```
 1: 20000
-2: 5000
-3: 10000
-4: 20000
-5: 40000
-6: 60000
-7: 100000
-8: 150000
+2: 10000
+3: 20000
+4: 40000
+5: 80000
+6: 120000
+7: 150000
+8: 200000
 ```
  */
 declare const CONTROLLER_DOWNGRADE: { [rcl: number]: number };

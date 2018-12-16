@@ -1,6 +1,6 @@
 {
     "name": "my-screeps-typings",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "TypeScript declarations for the game Screeps. (Mysak0CZ's version)",
     "scripts": {
         "lint": "tslint -p tsconfig.json"

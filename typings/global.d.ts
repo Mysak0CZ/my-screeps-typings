@@ -56,6 +56,15 @@ declare const Game: {
         getUsed(): number;
 
         /**
+         * This method is only available when **Virtual machine** is set to **Isolated** in your `account runtime settings`.
+         *
+         * Reset your runtime environment and wipe all data in heap memory.
+         * @see https://screeps.com/a/#!/account/runtime
+         * @todo test: is it void or never?
+         */
+        halt(): void;
+
+        /**
          * Allocate CPU limits to different shards. Total amount of CPU should remain equal to Game.cpu.shardLimits.
          * This method can be used only once per 12 hours.
          * @param limits An object with CPU values for each shard in the same format as `Game.cpu.shardLimits`.
@@ -700,32 +709,32 @@ interface CostMatrix {
 }
 
 /**
-* An object which provides fast access to room terrain data.
-* These objects can be constructed for any room in the world even if you have no access to it.
-*
-* Technically every `Room.Terrain` object is a very lightweight adapter to underlying static terrain buffers with corresponding minimal accessors.
-*/
-interface RoomTerrain {
-/**
- * Get terrain type at the specified room position by `(x,y)` coordinates.
- * Unlike the `Game.map.getTerrainAt(...)` method, this one doesn't perform any string operations and returns integer terrain type values.
- * @param x X position in the room.
- * @param y Y position in the room.
- * @returns `0` - terrain is `plain`
- * @returns `TERRAIN_MASK_WALL` - terrain is `wall`
- * @returns `TERRAIN_MASK_SWAMP` - terrain is `swamp`
- */
-get(x: number, y: number): 0 | typeof TERRAIN_MASK_WALL | typeof TERRAIN_MASK_SWAMP;
-
-/**
- * Get copy of underlying static terrain buffer. **Current underlying representation is `Uint8Array`**.
+ * An object which provides fast access to room terrain data.
+ * These objects can be constructed for any room in the world even if you have no access to it.
  *
- * _**WARNING:** this method relies on underlying representation of terrain data.
- * This is the fastest way to obtain terrain data of the whole room (2500 tiles), but users should keep in mind that it can be marked as deprecated anytime in the future, or return value type can be changed due to underlying data representation changing._
- * @param destinationArray A typed array view in which terrain will be copied to.
- * @see https://docs.screeps.com/api/#Room.Terrain.getRawBuffer
+ * Technically every `Room.Terrain` object is a very lightweight adapter to underlying static terrain buffers with corresponding minimal accessors.
  */
-getRawBuffer(destinationArray?: Uint8Array): Uint8Array | ERR_INVALID_ARGS;
+interface RoomTerrain {
+    /**
+     * Get terrain type at the specified room position by `(x,y)` coordinates.
+     * Unlike the `Game.map.getTerrainAt(...)` method, this one doesn't perform any string operations and returns integer terrain type values.
+     * @param x X position in the room.
+     * @param y Y position in the room.
+     * @returns `0` - terrain is `plain`
+     * @returns `TERRAIN_MASK_WALL` - terrain is `wall`
+     * @returns `TERRAIN_MASK_SWAMP` - terrain is `swamp`
+     */
+    get(x: number, y: number): 0 | typeof TERRAIN_MASK_WALL | typeof TERRAIN_MASK_SWAMP;
+
+    /**
+     * Get copy of underlying static terrain buffer. **Current underlying representation is `Uint8Array`**.
+     *
+     * _**WARNING:** this method relies on underlying representation of terrain data.
+     * This is the fastest way to obtain terrain data of the whole room (2500 tiles), but users should keep in mind that it can be marked as deprecated anytime in the future, or return value type can be changed due to underlying data representation changing._
+     * @param destinationArray A typed array view in which terrain will be copied to.
+     * @see https://docs.screeps.com/api/#Room.Terrain.getRawBuffer
+     */
+    getRawBuffer(destinationArray?: Uint8Array): Uint8Array | ERR_INVALID_ARGS;
 }
 
 /** Details of the creep being spawned currently that can be addressed by the `StructureSpawn.spawning` property. */
@@ -788,27 +797,27 @@ interface BodyPartInfo {
 }
 
 interface LineStyle {
-	/** Line width, default is 0.1. */
-	width?: number;
-	/** Line color in any web format, default is `#ffffff` (white). */
-	color?: string;
-	/** Opacity value, default is 0.5. */
-	opacity?: number;
-	/** Either `undefined` (solid line), `dashed`, or `dotted`. Default is undefined. */
-	lineStyle?: undefined | "dashed" | "dotted";
+    /** Line width, default is 0.1. */
+    width?: number;
+    /** Line color in any web format, default is `#ffffff` (white). */
+    color?: string;
+    /** Opacity value, default is 0.5. */
+    opacity?: number;
+    /** Either `undefined` (solid line), `dashed`, or `dotted`. Default is undefined. */
+    lineStyle?: undefined | "dashed" | "dotted";
 }
 
 interface PolyStyle {
-	/** Fill color in any web format, default is `undefined` (no fill). */
-	fill?: string;
-	/** Opacity value, default is 0.5. */
-	opacity?: number;
-	/** Stroke color in any web format, default is `#ffffff` (white). */
-	stroke?: string;
-	/** Stroke line width, default is 0.1. */
-	strokeWidth?: number;
-	/** Either `undefined` (solid line), `dashed`, or `dotted`. Default is undefined. */
-	lineStyle?: undefined | "dashed" | "dotted";
+    /** Fill color in any web format, default is `undefined` (no fill). */
+    fill?: string;
+    /** Opacity value, default is 0.5. */
+    opacity?: number;
+    /** Stroke color in any web format, default is `#ffffff` (white). */
+    stroke?: string;
+    /** Stroke line width, default is 0.1. */
+    strokeWidth?: number;
+    /** Either `undefined` (solid line), `dashed`, or `dotted`. Default is undefined. */
+    lineStyle?: undefined | "dashed" | "dotted";
 }
 
 interface CircleStyle {
@@ -840,32 +849,32 @@ interface RectStyle {
 }
 
 interface TextStyle {
-	/** Font color in any web format, default is `#ffffff` (white). */
-	color?: string;
-	/**
-	 * Either a number or a string in one of the following forms:
-	 *
-	 * `0.7` - relative size in game coordinates
-	 *
-	 * `20px` - absolute size in pixels
-	 *
-	 * `0.7 serif`
-	 *
-	 * `bold italic 1.5 Times New Roman`
-	 */
-	font?: number | string;
-	/** Stroke color in any web format, default is undefined (no stroke). */
-	stroke?: string;
-	/** Stroke width, default is 0.15. */
-	strokeWidth?: number;
-	/** Background color in any web format, default is undefined (no background). When background is enabled, text vertical align is set to middle (default is baseline). */
-	backgroundColor?: string;
-	/** Background rectangle padding, default is 0.3. */
-	backgroundPadding?: number;
-	/** Text align, either `center`, `left`, or `right`. Default is `center`. */
-	align?: "center" | "left" | "right";
-	/** Opacity value, default is 1.0. */
-	opacity?: number;
+    /** Font color in any web format, default is `#ffffff` (white). */
+    color?: string;
+    /**
+     * Either a number or a string in one of the following forms:
+     *
+     * `0.7` - relative size in game coordinates
+     *
+     * `20px` - absolute size in pixels
+     *
+     * `0.7 serif`
+     *
+     * `bold italic 1.5 Times New Roman`
+     */
+    font?: number | string;
+    /** Stroke color in any web format, default is undefined (no stroke). */
+    stroke?: string;
+    /** Stroke width, default is 0.15. */
+    strokeWidth?: number;
+    /** Background color in any web format, default is undefined (no background). When background is enabled, text vertical align is set to middle (default is baseline). */
+    backgroundColor?: string;
+    /** Background rectangle padding, default is 0.3. */
+    backgroundPadding?: number;
+    /** Text align, either `center`, `left`, or `right`. Default is `center`. */
+    align?: "center" | "left" | "right";
+    /** Opacity value, default is 1.0. */
+    opacity?: number;
 }
 
 interface _ObjectByFindConstant {
@@ -924,123 +933,123 @@ type Path = PathStep[];
  * @todo Check all types (not in official documentation)
  */
 type RoomEvent =
-| {
-      event: EVENT_ATTACK;
-      objectId: string;
-      data: {
-          /** the target object ID */
-          targetId: string;
-          /** the amount of hits damaged */
-          damage: number;
-          /** one of the constants */
-          attackType: EVENT_ATTACK_TYPE_CONSTANT;
+    | {
+          event: EVENT_ATTACK;
+          objectId: string;
+          data: {
+              /** the target object ID */
+              targetId: string;
+              /** the amount of hits damaged */
+              damage: number;
+              /** one of the constants */
+              attackType: EVENT_ATTACK_TYPE_CONSTANT;
+          };
+      }
+    | {
+          event: EVENT_OBJECT_DESTROYED;
+          objectId: string;
+          data: {
+              /** The type of the destroyed object */
+              type: "creep" | STRUCTURE_CONSTANT;
+          };
+      }
+    | {
+          event: EVENT_ATTACK_CONTROLLER;
+          objectId: string;
+          data: {};
+      }
+    | {
+          event: EVENT_BUILD;
+          objectId: string;
+          data: {
+              /** The target object ID */
+              targetId: string;
+              /** The amount of build progress gained */
+              amount: number;
+              /** The energy amount spent on the operation */
+              energySpent: number;
+          };
+      }
+    | {
+          event: EVENT_HARVEST;
+          objectId: string;
+          data: {
+              /** The target object ID */
+              targetId: string;
+              /** The amount of resource harvested */
+              amount: number;
+          };
+      }
+    | {
+          event: EVENT_HEAL;
+          objectId: string;
+          data: {
+              /** The target object ID */
+              targetId: string;
+              /** The amount of hits healed */
+              amount: number;
+              /** One of the constants */
+              healType: EVENT_HEAL_TYPE_CONSTANT;
+          };
+      }
+    | {
+          event: EVENT_REPAIR;
+          objectId: string;
+          data: {
+              /** The target object ID */
+              targetId: string;
+              /** The amount of hits repaired */
+              amount: number;
+              /** The energy amount spent on the operation */
+              energySpent: number;
+          };
+      }
+    | {
+          event: EVENT_RESERVE_CONTROLLER;
+          objectId: string;
+          data: {
+              /** The amount of reservation time gained */
+              amount: number;
+          };
+      }
+    | {
+          event: EVENT_UPGRADE_CONTROLLER;
+          objectId: string;
+          data: {
+              /** The amount of control points gained */
+              amount: number;
+              /** The energy amount spent on the operation */
+              energySpent: number;
+          };
+      }
+    | {
+          event: EVENT_EXIT;
+          objectId: string;
+          data: {
+              /** The name of the target room */
+              room: RoomName;
+              /** The coordinates in another room where the creep has appeared */
+              x: number;
+              /** The coordinates in another room where the creep has appeared */
+              y: number;
+          };
       };
-  }
-| {
-      event: EVENT_OBJECT_DESTROYED;
-      objectId: string;
-      data: {
-          /** The type of the destroyed object */
-          type: "creep" | STRUCTURE_CONSTANT;
-      };
-  }
-| {
-      event: EVENT_ATTACK_CONTROLLER;
-      objectId: string;
-      data: {};
-  }
-| {
-      event: EVENT_BUILD;
-      objectId: string;
-      data: {
-          /** The target object ID */
-          targetId: string;
-          /** The amount of build progress gained */
-          amount: number;
-          /** The energy amount spent on the operation */
-          energySpent: number;
-      };
-  }
-| {
-      event: EVENT_HARVEST;
-      objectId: string;
-      data: {
-          /** The target object ID */
-          targetId: string;
-          /** The amount of resource harvested */
-          amount: number;
-      };
-  }
-| {
-      event: EVENT_HEAL;
-      objectId: string;
-      data: {
-          /** The target object ID */
-          targetId: string;
-          /** The amount of hits healed */
-          amount: number;
-          /** One of the constants */
-          healType: EVENT_HEAL_TYPE_CONSTANT;
-      };
-  }
-| {
-      event: EVENT_REPAIR;
-      objectId: string;
-      data: {
-          /** The target object ID */
-          targetId: string;
-          /** The amount of hits repaired */
-          amount: number;
-          /** The energy amount spent on the operation */
-          energySpent: number;
-      };
-  }
-| {
-      event: EVENT_RESERVE_CONTROLLER;
-      objectId: string;
-      data: {
-          /** The amount of reservation time gained */
-          amount: number;
-      };
-  }
-| {
-      event: EVENT_UPGRADE_CONTROLLER;
-      objectId: string;
-      data: {
-          /** The amount of control points gained */
-          amount: number;
-          /** The energy amount spent on the operation */
-          energySpent: number;
-      };
-  }
-| {
-      event: EVENT_EXIT;
-      objectId: string;
-      data: {
-          /** The name of the target room */
-          room: RoomName;
-          /** The coordinates in another room where the creep has appeared */
-          x: number;
-          /** The coordinates in another room where the creep has appeared */
-          y: number;
-      };
-  };
 type _allOwnedStructures =
-  | StructureController
-  | StructureExtension
-  | StructureExtractor
-  | StructureKeeperLair
-  | StructureLab
-  | StructureLink
-  | StructureNuker
-  | StructureObserver
-  | StructurePowerBank
-  | StructurePowerSpawn
-  | StructureRampart
-  | StructureSpawn
-  | StructureStorage
-  | StructureTerminal
-  | StructureTower;
+    | StructureController
+    | StructureExtension
+    | StructureExtractor
+    | StructureKeeperLair
+    | StructureLab
+    | StructureLink
+    | StructureNuker
+    | StructureObserver
+    | StructurePowerBank
+    | StructurePowerSpawn
+    | StructureRampart
+    | StructureSpawn
+    | StructureStorage
+    | StructureTerminal
+    | StructureTower;
 type _allStructures = _allOwnedStructures | StructureContainer | StructurePortal | StructureRoad;
 type BuildableStructureConstant =
     | typeof STRUCTURE_EXTENSION
@@ -1338,16 +1347,20 @@ declare class Creep extends RoomObject {
 
     /**
      * Move the creep one square in the specified direction.
-     * Requires the `MOVE` body part.
-     * @param direction One of the direction constants
+     * Requires the `MOVE` body part, or another creep nearby `pulling` the creep.
+     * In case if you call `move` on a creep nearby, the `ERR_TIRED` and the `ERR_NO_BODYPART` checks will be bypassed; otherwise, the `ERR_NOT_IN_RANGE` check will be bypassed.
+     * @param direction A creep nearby, or one of the direction constants
      * @returns {0} `OK` - The operation has been scheduled successfully.
      * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this creep.
      * @returns {-4} `ERR_BUSY` - The creep is still being spawned.
+     * @returns {-9} `ERR_NOT_IN_RANGE` - The target creep is too far away
      * @returns {-10} `ERR_INVALID_ARGS` - The provided direction is incorrect.
      * @returns {-11} `ERR_TIRED` - The fatigue indicator of the creep is non-zero.
      * @returns {-12} `ERR_NO_BODYPART` - There are no MOVE body parts in this creep’s body.
      */
-    move(direction: DirectionConstant): OK | ERR_NOT_OWNER | ERR_BUSY | ERR_INVALID_ARGS | ERR_TIRED | ERR_NO_BODYPART;
+    move(
+        direction: Creep | DirectionConstant
+    ): OK | ERR_NOT_OWNER | ERR_BUSY | ERR_NOT_IN_RANGE | ERR_INVALID_ARGS | ERR_TIRED | ERR_NO_BODYPART;
 
     /**
      * Move the creep using the specified predefined path.
@@ -1468,6 +1481,23 @@ declare class Creep extends RoomObject {
      * @returns {-9} `ERR_NOT_IN_RANGE` - The target is too far away.
      */
     pickup(target: Resource): OK | ERR_NOT_OWNER | ERR_BUSY | ERR_INVALID_TARGET | ERR_FULL | ERR_NOT_IN_RANGE;
+
+    /**
+     * Help another creep to follow this creep.
+     * The fatigue generated for the target's move will be added to the creep instead of the target.
+     * Requires the `MOVE` body part.
+     * The target has to be at adjacent square to the creep.
+     * The creep must move elsewhere, and the target must move towards the creep.
+     * @param target The target creep.
+     * @returns {0} `OK` - The operation has been scheduled successfully.
+     * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this creep.
+     * @returns {-4} `ERR_BUSY` - The creep is still being spawned.
+     * @returns {-7} `ERR_INVALID_TARGET` - The target provided is invalid.
+     * @returns {-9} `ERR_NOT_IN_RANGE` - The target is too far away.
+     * @returns {-11} `ERR_TIRED` - The fatigue indicator of the creep is non-zero.
+     * @returns {-12} `ERR_NO_BODYPART` - There are no MOVE body parts in this creep’s body.
+     */
+    pull(target: Creep): OK | ERR_NOT_OWNER | ERR_BUSY | ERR_INVALID_TARGET | ERR_NOT_IN_RANGE | ERR_TIRED | ERR_NO_BODYPART;
 
     /**
      * A ranged attack against another creep or structure.
@@ -1765,11 +1795,10 @@ declare class OwnedStructure extends Structure {
     readonly owner: { username: string };
 }
 
-
 declare class Resource extends RoomObject {
     /** The link to the Room object. */
     readonly room: Room;
-    
+
     /** The amount of resource units containing. */
     readonly amount: number;
 
@@ -2046,7 +2075,6 @@ declare class Room {
         asArray: true
     ): (_ObjectByLookConstant[T] & { x: number; y: number })[];
 }
-
 
 /**
  * Any object with a position in a room.
@@ -2379,7 +2407,7 @@ interface findPathOpts {
     /** If true, the result path will be serialized using Room.serializePath. The default is false. */
     serialize: boolean;
 
-    /** The maximum allowed rooms to search. The default (and maximum) is 16. This is only used when the new `PathFinder` is enabled. */
+    /** The maximum allowed rooms to search. The default is 16, maximum is 64. This is only used when the new `PathFinder` is enabled. */
     maxRooms: number;
 
     /** Find a path to a position in specified linear range of target. The default is 0. */
@@ -2432,13 +2460,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    line(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        style?: LineStyle
-    ): RoomVisual;
+    line(x1: number, y1: number, x2: number, y2: number, style?: LineStyle): RoomVisual;
     /**
      * Draw a line.
      * @param pos1 The start position object.
@@ -2446,11 +2468,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    line(
-        pos1: RoomPosition,
-        pos2: RoomPosition,
-        style?: LineStyle
-    ): RoomVisual;
+    line(pos1: RoomPosition, pos2: RoomPosition, style?: LineStyle): RoomVisual;
 
     /**
      * Draw a circle.
@@ -2459,21 +2477,14 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    circle(
-        x: number,
-        y: number,
-        style?: CircleStyle
-    ): RoomVisual;
+    circle(x: number, y: number, style?: CircleStyle): RoomVisual;
     /**
      * Draw a circle.
      * @param pos The position object of the center.
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    circle(
-        pos: RoomPosition,
-        style?: CircleStyle
-    ): RoomVisual;
+    circle(pos: RoomPosition, style?: CircleStyle): RoomVisual;
 
     /**
      * Draw a rectangle.
@@ -2484,13 +2495,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    rect(
-        x: number,
-        y: number,
-        width: number,
-        height: number,
-        style?: RectStyle
-    ): RoomVisual;
+    rect(x: number, y: number, width: number, height: number, style?: RectStyle): RoomVisual;
     /**
      * Draw a rectangle.
      * @param topLeftPos The position object of the top-left corner.
@@ -2499,12 +2504,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    rect(
-        topLeftPos: RoomPosition,
-        width: number,
-        height: number,
-        style?: RectStyle
-    ): RoomVisual;
+    rect(topLeftPos: RoomPosition, width: number, height: number, style?: RectStyle): RoomVisual;
 
     /**
      * Draw a polyline.
@@ -2512,10 +2512,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    poly(
-        points: ([number, number] | RoomPosition)[],
-        style?: PolyStyle
-    ): RoomVisual;
+    poly(points: ([number, number] | RoomPosition)[], style?: PolyStyle): RoomVisual;
 
     /**
      * Draw a text label. You can use any valid Unicode characters, including emoji.
@@ -2526,12 +2523,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    text(
-        text: string,
-        x: number,
-        y: number,
-        style?: TextStyle
-    ): RoomVisual;
+    text(text: string, x: number, y: number, style?: TextStyle): RoomVisual;
     /**
      * Draw a text label. You can use any valid Unicode characters, including emoji.
      * @see http://unicode.org/emoji/charts/emoji-style.txt
@@ -2540,11 +2532,7 @@ declare class RoomVisual {
      * @param style An object with the following properties
      * @returns The `RoomVisual` object itself, so that you can chain calls.
      */
-    text(
-        text: string,
-        pos: RoomPosition,
-        style?: TextStyle
-    ): RoomVisual;
+    text(text: string, pos: RoomPosition, style?: TextStyle): RoomVisual;
 
     /**
      * Remove all visuals from the room.
@@ -2568,7 +2556,7 @@ declare class RoomVisual {
 declare class Source extends RoomObject {
     /** The link to the Room object. */
     readonly room: Room;
-    
+
     /** The remaining amount of energy. */
     readonly energy: number;
 
@@ -2588,7 +2576,7 @@ declare class Source extends RoomObject {
 declare class Structure extends RoomObject {
     /** The link to the Room object. */
     readonly room: Room;
-    
+
     /** The current amount of hit points of the structure. */
     readonly hits: number;
 
@@ -2685,7 +2673,7 @@ declare class StructureContainer extends Structure {
 declare class StructureController extends OwnedStructure {
     /** One of the `STRUCTURE_*` constants. */
     readonly structureType: typeof STRUCTURE_CONTROLLER;
-    
+
     /** Current controller level, from 0 to 8. */
     readonly level: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -2728,7 +2716,11 @@ declare class StructureController extends OwnedStructure {
           }
         | undefined;
 
-    /** The amount of game ticks when this controller will lose one level. This timer can be reset by using `Creep.upgradeController`. */
+    /**
+     * The amount of game ticks when this controller will lose one level.
+     * This timer is set to 50% on level upgrade or downgrade, and it can be increased by using `Creep.upgradeController`.
+     * Must be full to upgrade the controller level.
+     */
     readonly ticksToDowngrade: number;
 
     /** The amount of game ticks while this controller cannot be upgraded due to attack. Safe mode is also unavailable during this period. */
@@ -2740,7 +2732,7 @@ declare class StructureController extends OwnedStructure {
      * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this controller.
      * @returns {-4} `ERR_BUSY` - There is another room in safe mode already.
      * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - There is no safe mode activations available.
-     * @returns {-11} `ERR_TIRED` - The previous safe mode is still cooling down, or the controller is `upgradeBlocked`, or the controller is downgraded for 5000 ticks or more.
+     * @returns {-11} `ERR_TIRED` - The previous safe mode is still cooling down, or the controller is `upgradeBlocked`, or the controller is downgraded for 50% plus 5000 ticks or more.
      */
     activateSafeMode(): OK | ERR_NOT_OWNER | ERR_BUSY | ERR_NOT_ENOUGH_RESOURCES | ERR_TIRED;
 
@@ -3303,8 +3295,6 @@ declare class StructureSpawn extends OwnedStructure {
     ): OK | ERR_NOT_OWNER | ERR_NOT_ENOUGH_ENERGY | ERR_INVALID_TARGET | ERR_FULL | ERR_NOT_IN_RANGE;
 }
 
-
-
 /**
  * A structure that can store huge amount of resource units.
  * Only one structure per room is allowed that can be addressed by `Room.storage` property.
@@ -3519,7 +3509,7 @@ declare class StructureWall extends Structure {
 declare class Tombstone extends RoomObject {
     /** The link to the Room object. */
     readonly room: Room;
-    
+
     /** An object containing the deceased creep. */
     readonly creep: Creep;
 
