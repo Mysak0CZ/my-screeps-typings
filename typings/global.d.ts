@@ -1990,7 +1990,7 @@ declare class Room {
      * @param raw If this parameter is false or undefined, the method returns an object parsed using `JSON.parse` which incurs some CPU cost on the first access (the return value is cached on subsequent calls). If raw is truthy, then raw JSON in string format is returned.
      * @returns An array of events.
      */
-    getEventLog(raw?: false): Event[];
+    getEventLog(raw?: false): RoomEvent[];
     getEventLog(raw: true): string;
 
     /**
