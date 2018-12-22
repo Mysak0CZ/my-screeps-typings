@@ -60,9 +60,8 @@ declare const Game: {
          *
          * Reset your runtime environment and wipe all data in heap memory.
          * @see https://screeps.com/a/#!/account/runtime
-         * @todo test: is it void or never?
          */
-        halt(): void;
+        halt(): never;
 
         /**
          * Allocate CPU limits to different shards. Total amount of CPU should remain equal to Game.cpu.shardLimits.
