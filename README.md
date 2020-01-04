@@ -1,5 +1,5 @@
 # Screeps-typings
-TypeScript declarations for the game Screeps. In-game version 2018-12-14
+TypeScript declarations for the game Screeps. In-game version 2019-12-27
 
 > **These are not official typings for the Screeps game**
 
@@ -28,6 +28,6 @@ I also tested them with `bencbartlett/Overmind`. After insignificant changes it 
 
 ## Footnote
 
-All typings were written in 4 days. Almost any of them aren't tested and there are still some `@todo`s 
+Most typings aren't tested and there are still some `@todo`s 
 
 [Official API]: https://docs.screeps.com/api/
