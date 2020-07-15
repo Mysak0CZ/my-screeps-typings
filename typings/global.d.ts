@@ -40,6 +40,17 @@ declare const Game: {
         readonly shardLimits: { [name: string]: number };
 
         /**
+         * Whether full CPU is currently unlocked for your account.
+         */
+        readonly unlocked: boolean;
+
+        /**
+         * The time in milliseconds since UNIX epoch time until full CPU is unlocked for your account.
+         * This property is not defined when full CPU is not unlocked for your account or it's unlocked with a subscription.
+         */
+        readonly unlockedTime?: number;
+
+        /**
          * Use this method to get heap statistics for your virtual machine.
          * The return value is almost identical to the Node.js function v8.getHeapStatistics().
          * This function returns one additional property: externally_allocated_size which is the total amount of currently allocated memory which is not included in the v8 heap but counts against this isolate's memory limit.
@@ -71,6 +82,23 @@ declare const Game: {
          * @returns {-10} `ERR_INVALID_ARGS` - The argument is not a valid shard limits object.
          */
         setShardLimits(limits: { [name: string]: number }): OK | ERR_BUSY | ERR_INVALID_ARGS;
+
+        /**
+         * Unlock full CPU for your account for additional 24 hours.
+         * This method will consume 1 CPU unlock bound to your account (See Game.resources).
+         * If full CPU is not currently unlocked for your account, it may take some time (up to 5 minutes) before unlock is applied to your account.
+         * @returns {0} `OK` - The operation has been scheduled successfully.
+         * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - Your account does not have enough `cpuUnlock` resource.
+         * @returns {-8} `ERR_FULL` - Your CPU is unlocked with a subscription.
+         */
+        unlock(): OK | ERR_NOT_ENOUGH_RESOURCES | ERR_FULL;
+
+        /**
+         * Generate 1 pixel resource unit for 5000 CPU from your bucket.
+         * @returns {0} `OK` - The operation has been scheduled successfully.
+         * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - Your bucket does not have enough CPU.
+         */
+        generatePixel(): OK | ERR_NOT_ENOUGH_RESOURCES;
     };
 
     /**
@@ -224,10 +252,21 @@ declare const Game: {
 
         /**
          * Check if the room is available to move into.
+         * @deprecated This method is deprecated and will be removed soon. Please use Game.map.getRoomStatus instead.
          * @param roomName The room name.
          * @returns A boolean value.
          */
         isRoomAvailable(roomName: string): boolean;
+
+        /**
+         * Gets availablity status of the room with the specified name.
+         * @see https://docs.screeps.com/start-areas.html
+         * @param roomName The room name.
+         * @returns https://docs.screeps.com/api/#Game.map.getRoomStatus
+         */
+        getRoomStatus(
+            roomName: string
+        ): { status: "normal" | "closed" | "novice" | "respawn"; timestamp: number | null } | undefined;
     };
 
     /**
@@ -395,7 +434,7 @@ declare const Game: {
 
     /**
      *
-     * An object with your global resources that are bound to the account, like subscription tokens.
+     * An object with your global resources that are bound to the account, like like pixels or cpu unlocks.
      * Each object key is a resource constant, values are resources amounts.
      * @todo More specific resource types
      */
@@ -742,7 +781,7 @@ interface PathFinderSerachOptions {
      * Weight to apply to the heuristic in the A* formula `F = G + weight * H`.
      * Use this option only if you understand the underlying A* algorithm mechanics!
      *
-     * The default value is 1.
+     * The default value is 1.2.
      */
     heuristicWeight?: number;
 }
@@ -2531,6 +2570,7 @@ declare class Room {
      * @param structureType One of the `STRUCTURE_*` constants.
      * @param name The name of the structure, for structures that support it (currently only spawns).
      * @returns {0} `OK` - The operation has been scheduled successfully.
+     * @returns {-1} `ERR_NOT_OWNER` - The room is claimed or reserved by a hostile player.
      * @returns {-7} `ERR_INVALID_TARGET` - The structure cannot be placed at the specified location.
      * @returns {-8} `ERR_FULL` - You have too many construction sites. The maximum number of construction sites per player is 100.
      * @returns {-10} `ERR_INVALID_ARGS` - The location is incorrect.
@@ -2541,13 +2581,13 @@ declare class Room {
         x: number,
         y: number,
         structureType: STRUCTURE_CONSTANT
-    ): OK | ERR_INVALID_TARGET | ERR_FULL | ERR_INVALID_ARGS | ERR_RCL_NOT_ENOUGH;
+    ): OK | ERR_NOT_OWNER | ERR_INVALID_TARGET | ERR_FULL | ERR_INVALID_ARGS | ERR_RCL_NOT_ENOUGH;
     createConstructionSite(
         x: number,
         y: number,
         structureType: typeof STRUCTURE_SPAWN,
         name?: string
-    ): OK | ERR_INVALID_TARGET | ERR_FULL | ERR_INVALID_ARGS | ERR_RCL_NOT_ENOUGH;
+    ): OK | ERR_NOT_OWNER | ERR_INVALID_TARGET | ERR_FULL | ERR_INVALID_ARGS | ERR_RCL_NOT_ENOUGH;
 
     /**
      * Create new ConstructionSite at the specified location.
@@ -3285,21 +3325,25 @@ declare class Source extends RoomObject {
  */
 declare class Store {
     /**
-     * Returns capacity of this store for the specified resource, or total capacity if `resource` is undefined.
+     * Returns capacity of this store for the specified resource.
+     * For a general purpose store, it returns total capacity if `resource` is undefined.
      * @param resource The type of the resource.
-     * @returns Returns capacity number, or `null` in case of a not valid `resource` for this store type.
+     * @returns Returns capacity number, or `null` in case of an invalid `resource` for this store type.
      */
     getCapacity(): number;
     getCapacity(resource?: RESOURCE_CONSTANT): number | null;
 
     /**
-     * A shorthand for `getCapacity(resource) - getUsedCapacity(resource)`.
+     * Returns free capacity for the store.
+     * For a limited store, it returns the capacity available for the specified resource if `resource` is defined and valid for this store.
      * @param resource The type of the resource.
+     * @returns Returns available capacity number, or `null` in case of an invalid `resource` for this store type.
      */
-    getFreeCapacity(resource?: RESOURCE_CONSTANT): number;
+    getFreeCapacity(resource?: RESOURCE_CONSTANT): number | null;
 
     /**
-     * Returns the capacity used by the specified resource, or total used capacity for general purpose stores if `resource` is undefined.
+     * Returns the capacity used by the specified resource.
+     * For a general purpose store, it returns total used capacity if `resource` is undefined.
      * @param resource The type of the resource.
      * @returns Returns used capacity number, or null in case of a not valid resource for this store type. [NOTE: this is not true, always returns number]
      */
@@ -3650,6 +3694,35 @@ declare class StructureLab extends OwnedStructure {
         | ERR_RCL_NOT_ENOUGH;
 
     /**
+     * Breaks mineral compounds back into reagents.
+     * The same output labs can be used by many source labs.
+     * @param lab1 The first result lab.
+     * @param lab2 The second result lab.
+     * @returns {0} `OK` - The operation has been scheduled successfully.
+     * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this lab.
+     * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - The source lab do not have enough resources.
+     * @returns {-7} `ERR_INVALID_TARGET` - The targets are not valid lab objects.
+     * @returns {-8} `ERR_FULL` - One of targets cannot receive any more resource.
+     * @returns {-9} `ERR_NOT_IN_RANGE` - The targets are too far away.
+     * @returns {-10} `ERR_INVALID_ARGS` - The reaction cannot be reversed into this resources.
+     * @returns {-11} `ERR_TIRED` - The lab is still cooling down.
+     * @returns {-14} `ERR_RCL_NOT_ENOUGH` - Room Controller Level insufficient to use this structure.
+     */
+    reverseReaction(
+        lab1: StructureLab,
+        lab2: StructureLab
+    ):
+        | OK
+        | ERR_NOT_OWNER
+        | ERR_NOT_ENOUGH_RESOURCES
+        | ERR_INVALID_TARGET
+        | ERR_FULL
+        | ERR_NOT_IN_RANGE
+        | ERR_INVALID_ARGS
+        | ERR_TIRED
+        | ERR_RCL_NOT_ENOUGH;
+
+    /**
      * Produce mineral compounds using reagents from two other labs.
      * The same input labs can be used by many output labs.
      * @param lab1 The first source lab.
@@ -3658,7 +3731,7 @@ declare class StructureLab extends OwnedStructure {
      * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this lab.
      * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - The source lab do not have enough resources.
      * @returns {-7} `ERR_INVALID_TARGET` - The targets are not valid lab objects.
-     * @returns {-8} `ERR_FULL` - The target cannot receive any more energy.
+     * @returns {-8} `ERR_FULL` - The target cannot receive any more resource.
      * @returns {-9} `ERR_NOT_IN_RANGE` - The targets are too far away.
      * @returns {-10} `ERR_INVALID_ARGS` - The reaction cannot be run using this resources.
      * @returns {-11} `ERR_TIRED` - The lab is still cooling down.
@@ -3802,8 +3875,9 @@ declare class StructureNuker extends OwnedStructure {
      * @returns {0} `OK` - The operation has been scheduled successfully.
      * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this structure.
      * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - The structure does not have enough energy and/or ghodium.
-     * @returns {-7} `ERR_INVALID_TARGET` - The target is not a valid RoomPosition.
+     * @returns {-7} `ERR_INVALID_TARGET` - The nuke can't be launched to the specified RoomPosition (see Start Areas).
      * @returns {-9} `ERR_NOT_IN_RANGE` - The target room is out of range.
+     * @returns {-10} `ERR_INVALID_ARGS` - The target is not a valid RoomPosition.
      * @returns {-11} `ERR_TIRED` - This structure is still cooling down.
      * @returns {-14} `ERR_RCL_NOT_ENOUGH` - Room Controller Level insufficient to use this structure.
      */
@@ -3815,6 +3889,7 @@ declare class StructureNuker extends OwnedStructure {
         | ERR_NOT_ENOUGH_RESOURCES
         | ERR_INVALID_TARGET
         | ERR_NOT_IN_RANGE
+        | ERR_INVALID_ARGS
         | ERR_TIRED
         | ERR_RCL_NOT_ENOUGH;
 }
