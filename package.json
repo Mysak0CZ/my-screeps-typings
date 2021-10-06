@@ -1,21 +1,21 @@
 {
-    "name": "my-screeps-typings",
-    "version": "1.0.1",
-    "description": "TypeScript declarations for the game Screeps. (Mysak0CZ's version)",
-    "scripts": {
-        "lint": "eslint --max-warnings 0 typings"
-    },
-    "author": "Mysak0CZ",
-    "license": "MIT",
-    "repository": "Mysak0CZ/my-screeps-typings",
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^4.33.0",
-        "@typescript-eslint/parser": "^4.33.0",
-        "eslint": "^7.32.0",
-        "typescript": "^4.4.3"
-    },
-    "dependencies": {
-        "@types/lodash": "~3.10.1",
-        "@types/node": "^10.17.13"
-    }
+	"name": "my-screeps-typings",
+	"version": "1.0.1",
+	"description": "TypeScript declarations for the game Screeps. (Mysak0CZ's version)",
+	"scripts": {
+		"lint": "tsc -p . && eslint --max-warnings 0 typings"
+	},
+	"author": "Mysak0CZ",
+	"license": "MIT",
+	"repository": "Mysak0CZ/my-screeps-typings",
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
+		"eslint": "^7.32.0",
+		"typescript": "^4.4.3"
+	},
+	"dependencies": {
+		"@types/lodash": "~3.10.1",
+		"@types/node": "^10.17.13"
+	}
 }
