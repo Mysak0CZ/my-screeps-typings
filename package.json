@@ -3,14 +3,15 @@
     "version": "1.0.1",
     "description": "TypeScript declarations for the game Screeps. (Mysak0CZ's version)",
     "scripts": {
-        "lint": "tslint -p tsconfig.json"
+        "lint": "eslint --max-warnings 0 typings"
     },
     "author": "Mysak0CZ",
     "license": "MIT",
     "repository": "Mysak0CZ/my-screeps-typings",
     "devDependencies": {
-        "tslint": "^5.20.1",
-        "tslint-config-prettier": "^1.18.0",
+        "@typescript-eslint/eslint-plugin": "^4.33.0",
+        "@typescript-eslint/parser": "^4.33.0",
+        "eslint": "^7.32.0",
         "typescript": "^3.7.4"
     },
     "dependencies": {
