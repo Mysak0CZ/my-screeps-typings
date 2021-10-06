@@ -94,34 +94,34 @@ type FIND_RUINS = typeof FIND_RUINS;
 
 type FIND_EXIT_CONSTANT = FIND_EXIT_TOP | FIND_EXIT_RIGHT | FIND_EXIT_BOTTOM | FIND_EXIT_LEFT;
 type FIND_CONSTANT =
-    | FIND_EXIT_TOP
-    | FIND_EXIT_RIGHT
-    | FIND_EXIT_BOTTOM
-    | FIND_EXIT_LEFT
-    | FIND_EXIT
-    | FIND_CREEPS
-    | FIND_MY_CREEPS
-    | FIND_HOSTILE_CREEPS
-    | FIND_SOURCES_ACTIVE
-    | FIND_SOURCES
-    | FIND_DROPPED_RESOURCES
-    | FIND_STRUCTURES
-    | FIND_MY_STRUCTURES
-    | FIND_HOSTILE_STRUCTURES
-    | FIND_FLAGS
-    | FIND_CONSTRUCTION_SITES
-    | FIND_MY_SPAWNS
-    | FIND_HOSTILE_SPAWNS
-    | FIND_MY_CONSTRUCTION_SITES
-    | FIND_HOSTILE_CONSTRUCTION_SITES
-    | FIND_MINERALS
-    | FIND_NUKES
-    | FIND_TOMBSTONES
-    | FIND_POWER_CREEPS
-    | FIND_MY_POWER_CREEPS
-    | FIND_HOSTILE_POWER_CREEPS
-    | FIND_DEPOSITS
-    | FIND_RUINS;
+	| FIND_EXIT_TOP
+	| FIND_EXIT_RIGHT
+	| FIND_EXIT_BOTTOM
+	| FIND_EXIT_LEFT
+	| FIND_EXIT
+	| FIND_CREEPS
+	| FIND_MY_CREEPS
+	| FIND_HOSTILE_CREEPS
+	| FIND_SOURCES_ACTIVE
+	| FIND_SOURCES
+	| FIND_DROPPED_RESOURCES
+	| FIND_STRUCTURES
+	| FIND_MY_STRUCTURES
+	| FIND_HOSTILE_STRUCTURES
+	| FIND_FLAGS
+	| FIND_CONSTRUCTION_SITES
+	| FIND_MY_SPAWNS
+	| FIND_HOSTILE_SPAWNS
+	| FIND_MY_CONSTRUCTION_SITES
+	| FIND_HOSTILE_CONSTRUCTION_SITES
+	| FIND_MINERALS
+	| FIND_NUKES
+	| FIND_TOMBSTONES
+	| FIND_POWER_CREEPS
+	| FIND_MY_POWER_CREEPS
+	| FIND_HOSTILE_POWER_CREEPS
+	| FIND_DEPOSITS
+	| FIND_RUINS;
 
 declare const TOP: 1;
 declare const TOP_RIGHT: 2;
@@ -154,16 +154,16 @@ declare const COLOR_GREY: 9;
 declare const COLOR_WHITE: 10;
 
 type COLOR_CONSTANT =
-    | typeof COLOR_RED
-    | typeof COLOR_PURPLE
-    | typeof COLOR_BLUE
-    | typeof COLOR_CYAN
-    | typeof COLOR_GREEN
-    | typeof COLOR_YELLOW
-    | typeof COLOR_ORANGE
-    | typeof COLOR_BROWN
-    | typeof COLOR_GREY
-    | typeof COLOR_WHITE;
+	| typeof COLOR_RED
+	| typeof COLOR_PURPLE
+	| typeof COLOR_BLUE
+	| typeof COLOR_CYAN
+	| typeof COLOR_GREEN
+	| typeof COLOR_YELLOW
+	| typeof COLOR_ORANGE
+	| typeof COLOR_BROWN
+	| typeof COLOR_GREY
+	| typeof COLOR_WHITE;
 
 declare const COLORS_ALL: COLOR_CONSTANT[];
 
@@ -197,42 +197,42 @@ type LOOK_TOMBSTONES = typeof LOOK_TOMBSTONES;
 type LOOK_POWER_CREEPS = typeof LOOK_POWER_CREEPS;
 type LOOK_RUINS = typeof LOOK_RUINS;
 type LOOK_CONSTANT =
-    | LOOK_CREEPS
-    | LOOK_ENERGY
-    | LOOK_RESOURCES
-    | LOOK_SOURCES
-    | LOOK_MINERALS
-    | LOOK_DEPOSITS
-    | LOOK_STRUCTURES
-    | LOOK_FLAGS
-    | LOOK_CONSTRUCTION_SITES
-    | LOOK_NUKES
-    | LOOK_TERRAIN
-    | LOOK_TOMBSTONES
-    | LOOK_POWER_CREEPS
-    | LOOK_RUINS;
+	| LOOK_CREEPS
+	| LOOK_ENERGY
+	| LOOK_RESOURCES
+	| LOOK_SOURCES
+	| LOOK_MINERALS
+	| LOOK_DEPOSITS
+	| LOOK_STRUCTURES
+	| LOOK_FLAGS
+	| LOOK_CONSTRUCTION_SITES
+	| LOOK_NUKES
+	| LOOK_TERRAIN
+	| LOOK_TOMBSTONES
+	| LOOK_POWER_CREEPS
+	| LOOK_RUINS;
 
 declare const OBSTACLE_OBJECT_TYPES: [
-    "spawn",
-    "creep",
-    "powerCreep",
-    "source",
-    "mineral",
-    "deposit",
-    "controller",
-    "constructedWall",
-    "extension",
-    "link",
-    "storage",
-    "tower",
-    "observer",
-    "powerSpawn",
-    "powerBank",
-    "lab",
-    "terminal",
-    "nuker",
-    "factory",
-    "invaderCore"
+	"spawn",
+	"creep",
+	"powerCreep",
+	"source",
+	"mineral",
+	"deposit",
+	"controller",
+	"constructedWall",
+	"extension",
+	"link",
+	"storage",
+	"tower",
+	"observer",
+	"powerSpawn",
+	"powerBank",
+	"lab",
+	"terminal",
+	"nuker",
+	"factory",
+	"invaderCore"
 ];
 
 declare const MOVE: "move";
@@ -245,25 +245,25 @@ declare const HEAL: "heal";
 declare const CLAIM: "claim";
 
 type BODYPART_CONSTANT =
-    | typeof MOVE
-    | typeof WORK
-    | typeof CARRY
-    | typeof ATTACK
-    | typeof RANGED_ATTACK
-    | typeof TOUGH
-    | typeof HEAL
-    | typeof CLAIM;
+	| typeof MOVE
+	| typeof WORK
+	| typeof CARRY
+	| typeof ATTACK
+	| typeof RANGED_ATTACK
+	| typeof TOUGH
+	| typeof HEAL
+	| typeof CLAIM;
 
 declare const BODYPART_COST: {
-    [bodyPart: string]: number;
-    move: 50;
-    work: 100;
-    attack: 80;
-    carry: 50;
-    heal: 250;
-    ranged_attack: 150;
-    tough: 10;
-    claim: 600;
+	[bodyPart: string]: number;
+	move: 50;
+	work: 100;
+	attack: 80;
+	carry: 50;
+	heal: 250;
+	ranged_attack: 150;
+	tough: 10;
+	claim: 600;
 };
 
 /**
@@ -299,14 +299,14 @@ declare const RAMPART_DECAY_AMOUNT: 300;
 declare const RAMPART_DECAY_TIME: 100;
 declare const RAMPART_HITS: 1;
 declare const RAMPART_HITS_MAX: {
-    [rcl: number]: number;
-    2: 300000;
-    3: 1000000;
-    4: 3000000;
-    5: 10000000;
-    6: 30000000;
-    7: 100000000;
-    8: 300000000;
+	[rcl: number]: number;
+	2: 300000;
+	3: 1000000;
+	4: 3000000;
+	5: 10000000;
+	6: 30000000;
+	7: 100000000;
+	8: 300000000;
 };
 
 declare const ENERGY_REGEN_TIME: 300;
@@ -327,16 +327,16 @@ declare const WALL_HITS_MAX: 300000000;
 
 declare const EXTENSION_HITS: 1000;
 declare const EXTENSION_ENERGY_CAPACITY: {
-    [rcl: number]: number;
-    0: 50;
-    1: 50;
-    2: 50;
-    3: 50;
-    4: 50;
-    5: 50;
-    6: 50;
-    7: 100;
-    8: 200;
+	[rcl: number]: number;
+	0: 50;
+	1: 50;
+	2: 50;
+	3: 50;
+	4: 50;
+	5: 50;
+	6: 50;
+	7: 100;
+	8: 200;
 };
 
 declare const ROAD_HITS: 5000;
@@ -376,46 +376,46 @@ declare const STRUCTURE_NUKER: "nuker";
 declare const STRUCTURE_FACTORY: "factory";
 declare const STRUCTURE_INVADER_CORE: "invaderCore";
 type STRUCTURE_CONSTANT =
-    | typeof STRUCTURE_SPAWN
-    | typeof STRUCTURE_EXTENSION
-    | typeof STRUCTURE_ROAD
-    | typeof STRUCTURE_WALL
-    | typeof STRUCTURE_RAMPART
-    | typeof STRUCTURE_KEEPER_LAIR
-    | typeof STRUCTURE_PORTAL
-    | typeof STRUCTURE_CONTROLLER
-    | typeof STRUCTURE_LINK
-    | typeof STRUCTURE_STORAGE
-    | typeof STRUCTURE_TOWER
-    | typeof STRUCTURE_OBSERVER
-    | typeof STRUCTURE_POWER_BANK
-    | typeof STRUCTURE_POWER_SPAWN
-    | typeof STRUCTURE_EXTRACTOR
-    | typeof STRUCTURE_LAB
-    | typeof STRUCTURE_TERMINAL
-    | typeof STRUCTURE_CONTAINER
-    | typeof STRUCTURE_NUKER
-    | typeof STRUCTURE_FACTORY
-    | typeof STRUCTURE_INVADER_CORE;
+	| typeof STRUCTURE_SPAWN
+	| typeof STRUCTURE_EXTENSION
+	| typeof STRUCTURE_ROAD
+	| typeof STRUCTURE_WALL
+	| typeof STRUCTURE_RAMPART
+	| typeof STRUCTURE_KEEPER_LAIR
+	| typeof STRUCTURE_PORTAL
+	| typeof STRUCTURE_CONTROLLER
+	| typeof STRUCTURE_LINK
+	| typeof STRUCTURE_STORAGE
+	| typeof STRUCTURE_TOWER
+	| typeof STRUCTURE_OBSERVER
+	| typeof STRUCTURE_POWER_BANK
+	| typeof STRUCTURE_POWER_SPAWN
+	| typeof STRUCTURE_EXTRACTOR
+	| typeof STRUCTURE_LAB
+	| typeof STRUCTURE_TERMINAL
+	| typeof STRUCTURE_CONTAINER
+	| typeof STRUCTURE_NUKER
+	| typeof STRUCTURE_FACTORY
+	| typeof STRUCTURE_INVADER_CORE;
 
 declare const CONSTRUCTION_COST: {
-    [type: string]: number;
-    spawn: 15000;
-    extension: 3000;
-    road: 300;
-    constructedWall: 1;
-    rampart: 1;
-    link: 5000;
-    storage: 30000;
-    tower: 5000;
-    observer: 8000;
-    powerSpawn: 100000;
-    extractor: 5000;
-    lab: 50000;
-    terminal: 100000;
-    container: 5000;
-    nuker: 100000;
-    factory: 100000;
+	[type: string]: number;
+	spawn: 15000;
+	extension: 3000;
+	road: 300;
+	constructedWall: 1;
+	rampart: 1;
+	link: 5000;
+	storage: 30000;
+	tower: 5000;
+	observer: 8000;
+	powerSpawn: 100000;
+	extractor: 5000;
+	lab: 50000;
+	terminal: 100000;
+	container: 5000;
+	nuker: 100000;
+	factory: 100000;
 };
 declare const CONSTRUCTION_COST_ROAD_SWAMP_RATIO: 5;
 declare const CONSTRUCTION_COST_ROAD_WALL_RATIO: 150;
@@ -432,27 +432,27 @@ declare const CONSTRUCTION_COST_ROAD_WALL_RATIO: 150;
  ```
  */
 declare const CONTROLLER_LEVELS: {
-    [rcl: number]: number;
-    1: 200;
-    2: 45000;
-    3: 135000;
-    4: 405000;
-    5: 1215000;
-    6: 3645000;
-    7: 10935000;
+	[rcl: number]: number;
+	1: 200;
+	2: 45000;
+	3: 135000;
+	4: 405000;
+	5: 1215000;
+	6: 3645000;
+	7: 10935000;
 };
 declare const CONTROLLER_STRUCTURES: { [type: string]: { [rcl: number]: number } };
 
 declare const CONTROLLER_DOWNGRADE: {
-    [rcl: number]: number;
-    1: 20000;
-    2: 10000;
-    3: 20000;
-    4: 40000;
-    5: 80000;
-    6: 120000;
-    7: 150000;
-    8: 200000;
+	[rcl: number]: number;
+	1: 20000;
+	2: 10000;
+	3: 20000;
+	4: 40000;
+	5: 80000;
+	6: 120000;
+	7: 150000;
+	8: 200000;
 };
 declare const CONTROLLER_DOWNGRADE_RESTORE: 100;
 declare const CONTROLLER_DOWNGRADE_SAFEMODE_THRESHOLD: 5000;
@@ -523,29 +523,29 @@ declare const MAX_CREEP_SIZE: 50;
 
 declare const MINERAL_REGEN_TIME: 50000;
 declare const MINERAL_MIN_AMOUNT: {
-    [mineral: string]: number;
-    H: 35000;
-    O: 35000;
-    L: 35000;
-    K: 35000;
-    Z: 35000;
-    U: 35000;
-    X: 35000;
+	[mineral: string]: number;
+	H: 35000;
+	O: 35000;
+	L: 35000;
+	K: 35000;
+	Z: 35000;
+	U: 35000;
+	X: 35000;
 };
 declare const MINERAL_RANDOM_FACTOR: 2;
 declare const MINERAL_DENSITY: {
-    [density: number]: number;
-    1: 15000;
-    2: 35000;
-    3: 70000;
-    4: 100000;
+	[density: number]: number;
+	1: 15000;
+	2: 35000;
+	3: 70000;
+	4: 100000;
 };
 declare const MINERAL_DENSITY_PROBABILITY: {
-    [probability: number]: number;
-    1: 0.1;
-    2: 0.5;
-    3: 0.9;
-    4: 1.0;
+	[probability: number]: number;
+	1: 0.1;
+	2: 0.5;
+	3: 0.9;
+	4: 1.0;
 };
 declare const MINERAL_DENSITY_CHANGE: 0.05;
 
@@ -578,9 +578,9 @@ declare const NUKER_GHODIUM_CAPACITY: 5000;
 declare const NUKE_LAND_TIME: 50000;
 declare const NUKE_RANGE: 10;
 declare const NUKE_DAMAGE: {
-    [range: number]: number;
-    0: 10000000;
-    2: 5000000;
+	[range: number]: number;
+	0: 10000000;
+	2: 5000000;
 };
 
 declare const FACTORY_HITS: 1000;
@@ -591,8 +591,8 @@ declare const TOMBSTONE_DECAY_POWER_CREEP: 500;
 
 declare const RUIN_DECAY: 500;
 declare const RUIN_DECAY_STRUCTURES: {
-    [structure: string]: number;
-    powerBank: 10;
+	[structure: string]: number;
+	powerBank: 10;
 };
 
 declare const PORTAL_DECAY: 30000;
@@ -628,24 +628,24 @@ declare const RESOURCE_ZYNTHIUM: "Z";
 declare const RESOURCE_CATALYST: "X";
 declare const RESOURCE_GHODIUM: "G";
 type RESOURCE_T0 =
-    | typeof RESOURCE_HYDROGEN
-    | typeof RESOURCE_OXYGEN
-    | typeof RESOURCE_UTRIUM
-    | typeof RESOURCE_LEMERGIUM
-    | typeof RESOURCE_KEANIUM
-    | typeof RESOURCE_ZYNTHIUM
-    | typeof RESOURCE_CATALYST
-    | typeof RESOURCE_GHODIUM;
+	| typeof RESOURCE_HYDROGEN
+	| typeof RESOURCE_OXYGEN
+	| typeof RESOURCE_UTRIUM
+	| typeof RESOURCE_LEMERGIUM
+	| typeof RESOURCE_KEANIUM
+	| typeof RESOURCE_ZYNTHIUM
+	| typeof RESOURCE_CATALYST
+	| typeof RESOURCE_GHODIUM;
 
 declare const RESOURCE_SILICON: "silicon";
 declare const RESOURCE_METAL: "metal";
 declare const RESOURCE_BIOMASS: "biomass";
 declare const RESOURCE_MIST: "mist";
 type RESOURCE_MINERAL =
-    | typeof RESOURCE_SILICON
-    | typeof RESOURCE_METAL
-    | typeof RESOURCE_BIOMASS
-    | typeof RESOURCE_MIST;
+	| typeof RESOURCE_SILICON
+	| typeof RESOURCE_METAL
+	| typeof RESOURCE_BIOMASS
+	| typeof RESOURCE_MIST;
 
 declare const RESOURCE_HYDROXIDE: "OH";
 declare const RESOURCE_ZYNTHIUM_KEANITE: "ZK";
@@ -663,16 +663,16 @@ declare const RESOURCE_ZYNTHIUM_OXIDE: "ZO";
 declare const RESOURCE_GHODIUM_HYDRIDE: "GH";
 declare const RESOURCE_GHODIUM_OXIDE: "GO";
 type RESOURCE_T2 =
-    | typeof RESOURCE_UTRIUM_HYDRIDE
-    | typeof RESOURCE_UTRIUM_OXIDE
-    | typeof RESOURCE_KEANIUM_HYDRIDE
-    | typeof RESOURCE_KEANIUM_OXIDE
-    | typeof RESOURCE_LEMERGIUM_HYDRIDE
-    | typeof RESOURCE_LEMERGIUM_OXIDE
-    | typeof RESOURCE_ZYNTHIUM_HYDRIDE
-    | typeof RESOURCE_ZYNTHIUM_OXIDE
-    | typeof RESOURCE_GHODIUM_HYDRIDE
-    | typeof RESOURCE_GHODIUM_OXIDE;
+	| typeof RESOURCE_UTRIUM_HYDRIDE
+	| typeof RESOURCE_UTRIUM_OXIDE
+	| typeof RESOURCE_KEANIUM_HYDRIDE
+	| typeof RESOURCE_KEANIUM_OXIDE
+	| typeof RESOURCE_LEMERGIUM_HYDRIDE
+	| typeof RESOURCE_LEMERGIUM_OXIDE
+	| typeof RESOURCE_ZYNTHIUM_HYDRIDE
+	| typeof RESOURCE_ZYNTHIUM_OXIDE
+	| typeof RESOURCE_GHODIUM_HYDRIDE
+	| typeof RESOURCE_GHODIUM_OXIDE;
 
 declare const RESOURCE_UTRIUM_ACID: "UH2O";
 declare const RESOURCE_UTRIUM_ALKALIDE: "UHO2";
@@ -685,16 +685,16 @@ declare const RESOURCE_ZYNTHIUM_ALKALIDE: "ZHO2";
 declare const RESOURCE_GHODIUM_ACID: "GH2O";
 declare const RESOURCE_GHODIUM_ALKALIDE: "GHO2";
 type RESOURCE_T3 =
-    | typeof RESOURCE_UTRIUM_ACID
-    | typeof RESOURCE_UTRIUM_ALKALIDE
-    | typeof RESOURCE_KEANIUM_ACID
-    | typeof RESOURCE_KEANIUM_ALKALIDE
-    | typeof RESOURCE_LEMERGIUM_ACID
-    | typeof RESOURCE_LEMERGIUM_ALKALIDE
-    | typeof RESOURCE_ZYNTHIUM_ACID
-    | typeof RESOURCE_ZYNTHIUM_ALKALIDE
-    | typeof RESOURCE_GHODIUM_ACID
-    | typeof RESOURCE_GHODIUM_ALKALIDE;
+	| typeof RESOURCE_UTRIUM_ACID
+	| typeof RESOURCE_UTRIUM_ALKALIDE
+	| typeof RESOURCE_KEANIUM_ACID
+	| typeof RESOURCE_KEANIUM_ALKALIDE
+	| typeof RESOURCE_LEMERGIUM_ACID
+	| typeof RESOURCE_LEMERGIUM_ALKALIDE
+	| typeof RESOURCE_ZYNTHIUM_ACID
+	| typeof RESOURCE_ZYNTHIUM_ALKALIDE
+	| typeof RESOURCE_GHODIUM_ACID
+	| typeof RESOURCE_GHODIUM_ALKALIDE;
 
 declare const RESOURCE_CATALYZED_UTRIUM_ACID: "XUH2O";
 declare const RESOURCE_CATALYZED_UTRIUM_ALKALIDE: "XUHO2";
@@ -707,16 +707,16 @@ declare const RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE: "XZHO2";
 declare const RESOURCE_CATALYZED_GHODIUM_ACID: "XGH2O";
 declare const RESOURCE_CATALYZED_GHODIUM_ALKALIDE: "XGHO2";
 type RESOURCE_T4 =
-    | typeof RESOURCE_CATALYZED_UTRIUM_ACID
-    | typeof RESOURCE_CATALYZED_UTRIUM_ALKALIDE
-    | typeof RESOURCE_CATALYZED_KEANIUM_ACID
-    | typeof RESOURCE_CATALYZED_KEANIUM_ALKALIDE
-    | typeof RESOURCE_CATALYZED_LEMERGIUM_ACID
-    | typeof RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE
-    | typeof RESOURCE_CATALYZED_ZYNTHIUM_ACID
-    | typeof RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE
-    | typeof RESOURCE_CATALYZED_GHODIUM_ACID
-    | typeof RESOURCE_CATALYZED_GHODIUM_ALKALIDE;
+	| typeof RESOURCE_CATALYZED_UTRIUM_ACID
+	| typeof RESOURCE_CATALYZED_UTRIUM_ALKALIDE
+	| typeof RESOURCE_CATALYZED_KEANIUM_ACID
+	| typeof RESOURCE_CATALYZED_KEANIUM_ALKALIDE
+	| typeof RESOURCE_CATALYZED_LEMERGIUM_ACID
+	| typeof RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE
+	| typeof RESOURCE_CATALYZED_ZYNTHIUM_ACID
+	| typeof RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE
+	| typeof RESOURCE_CATALYZED_GHODIUM_ACID
+	| typeof RESOURCE_CATALYZED_GHODIUM_ALKALIDE;
 
 declare const RESOURCE_OPS: "ops";
 
@@ -757,54 +757,54 @@ declare const RESOURCE_SPIRIT: "spirit";
 declare const RESOURCE_EMANATION: "emanation";
 declare const RESOURCE_ESSENCE: "essence";
 type RESOURCE_FABRICATED =
-    | typeof RESOURCE_UTRIUM_BAR
-    | typeof RESOURCE_LEMERGIUM_BAR
-    | typeof RESOURCE_ZYNTHIUM_BAR
-    | typeof RESOURCE_KEANIUM_BAR
-    | typeof RESOURCE_GHODIUM_MELT
-    | typeof RESOURCE_OXIDANT
-    | typeof RESOURCE_REDUCTANT
-    | typeof RESOURCE_PURIFIER
-    | typeof RESOURCE_BATTERY
-    | typeof RESOURCE_COMPOSITE
-    | typeof RESOURCE_CRYSTAL
-    | typeof RESOURCE_LIQUID
-    | typeof RESOURCE_WIRE
-    | typeof RESOURCE_SWITCH
-    | typeof RESOURCE_TRANSISTOR
-    | typeof RESOURCE_MICROCHIP
-    | typeof RESOURCE_CIRCUIT
-    | typeof RESOURCE_DEVICE
-    | typeof RESOURCE_CELL
-    | typeof RESOURCE_PHLEGM
-    | typeof RESOURCE_TISSUE
-    | typeof RESOURCE_MUSCLE
-    | typeof RESOURCE_ORGANOID
-    | typeof RESOURCE_ORGANISM
-    | typeof RESOURCE_ALLOY
-    | typeof RESOURCE_TUBE
-    | typeof RESOURCE_FIXTURES
-    | typeof RESOURCE_FRAME
-    | typeof RESOURCE_HYDRAULICS
-    | typeof RESOURCE_MACHINE
-    | typeof RESOURCE_CONDENSATE
-    | typeof RESOURCE_CONCENTRATE
-    | typeof RESOURCE_EXTRACT
-    | typeof RESOURCE_SPIRIT
-    | typeof RESOURCE_EMANATION
-    | typeof RESOURCE_ESSENCE;
+	| typeof RESOURCE_UTRIUM_BAR
+	| typeof RESOURCE_LEMERGIUM_BAR
+	| typeof RESOURCE_ZYNTHIUM_BAR
+	| typeof RESOURCE_KEANIUM_BAR
+	| typeof RESOURCE_GHODIUM_MELT
+	| typeof RESOURCE_OXIDANT
+	| typeof RESOURCE_REDUCTANT
+	| typeof RESOURCE_PURIFIER
+	| typeof RESOURCE_BATTERY
+	| typeof RESOURCE_COMPOSITE
+	| typeof RESOURCE_CRYSTAL
+	| typeof RESOURCE_LIQUID
+	| typeof RESOURCE_WIRE
+	| typeof RESOURCE_SWITCH
+	| typeof RESOURCE_TRANSISTOR
+	| typeof RESOURCE_MICROCHIP
+	| typeof RESOURCE_CIRCUIT
+	| typeof RESOURCE_DEVICE
+	| typeof RESOURCE_CELL
+	| typeof RESOURCE_PHLEGM
+	| typeof RESOURCE_TISSUE
+	| typeof RESOURCE_MUSCLE
+	| typeof RESOURCE_ORGANOID
+	| typeof RESOURCE_ORGANISM
+	| typeof RESOURCE_ALLOY
+	| typeof RESOURCE_TUBE
+	| typeof RESOURCE_FIXTURES
+	| typeof RESOURCE_FRAME
+	| typeof RESOURCE_HYDRAULICS
+	| typeof RESOURCE_MACHINE
+	| typeof RESOURCE_CONDENSATE
+	| typeof RESOURCE_CONCENTRATE
+	| typeof RESOURCE_EXTRACT
+	| typeof RESOURCE_SPIRIT
+	| typeof RESOURCE_EMANATION
+	| typeof RESOURCE_ESSENCE;
 
 type RESOURCE_CONSTANT =
-    | RESOURCE_ENERGY
-    | RESOURCE_POWER
-    | RESOURCE_T0
-    | RESOURCE_MINERAL
-    | RESOURCE_T1
-    | RESOURCE_T2
-    | RESOURCE_T3
-    | RESOURCE_T4
-    | typeof RESOURCE_OPS
-    | RESOURCE_FABRICATED;
+	| RESOURCE_ENERGY
+	| RESOURCE_POWER
+	| RESOURCE_T0
+	| RESOURCE_MINERAL
+	| RESOURCE_T1
+	| RESOURCE_T2
+	| RESOURCE_T3
+	| RESOURCE_T4
+	| typeof RESOURCE_OPS
+	| RESOURCE_FABRICATED;
 
 type MineableMineralConstant = RESOURCE_T0;
 
@@ -864,18 +864,18 @@ type EVENT_EXIT = typeof EVENT_EXIT;
 type EVENT_POWER = typeof EVENT_POWER;
 type EVENT_TRANSFER = typeof EVENT_TRANSFER;
 type EVENT_CONSTANT =
-    | EVENT_ATTACK
-    | EVENT_OBJECT_DESTROYED
-    | EVENT_ATTACK_CONTROLLER
-    | EVENT_BUILD
-    | EVENT_HARVEST
-    | EVENT_HEAL
-    | EVENT_REPAIR
-    | EVENT_RESERVE_CONTROLLER
-    | EVENT_UPGRADE_CONTROLLER
-    | EVENT_EXIT
-    | EVENT_POWER
-    | EVENT_TRANSFER;
+	| EVENT_ATTACK
+	| EVENT_OBJECT_DESTROYED
+	| EVENT_ATTACK_CONTROLLER
+	| EVENT_BUILD
+	| EVENT_HARVEST
+	| EVENT_HEAL
+	| EVENT_REPAIR
+	| EVENT_RESERVE_CONTROLLER
+	| EVENT_UPGRADE_CONTROLLER
+	| EVENT_EXIT
+	| EVENT_POWER
+	| EVENT_TRANSFER;
 
 declare const EVENT_ATTACK_TYPE_MELEE: 1;
 declare const EVENT_ATTACK_TYPE_RANGED: 2;
@@ -884,12 +884,12 @@ declare const EVENT_ATTACK_TYPE_DISMANTLE: 4;
 declare const EVENT_ATTACK_TYPE_HIT_BACK: 5;
 declare const EVENT_ATTACK_TYPE_NUKE: 6;
 type EVENT_ATTACK_TYPE_CONSTANT =
-    | typeof EVENT_ATTACK_TYPE_MELEE
-    | typeof EVENT_ATTACK_TYPE_RANGED
-    | typeof EVENT_ATTACK_TYPE_RANGED_MASS
-    | typeof EVENT_ATTACK_TYPE_DISMANTLE
-    | typeof EVENT_ATTACK_TYPE_HIT_BACK
-    | typeof EVENT_ATTACK_TYPE_NUKE;
+	| typeof EVENT_ATTACK_TYPE_MELEE
+	| typeof EVENT_ATTACK_TYPE_RANGED
+	| typeof EVENT_ATTACK_TYPE_RANGED_MASS
+	| typeof EVENT_ATTACK_TYPE_DISMANTLE
+	| typeof EVENT_ATTACK_TYPE_HIT_BACK
+	| typeof EVENT_ATTACK_TYPE_NUKE;
 
 declare const EVENT_HEAL_TYPE_MELEE: 1;
 declare const EVENT_HEAL_TYPE_RANGED: 2;
@@ -905,7 +905,7 @@ declare const POWER_CREEP_MAX_LEVEL: 25;
 declare const POWER_CREEP_LIFE_TIME: 5000;
 
 declare const POWER_CLASS: Readonly<{
-    OPERATOR: "operator";
+	OPERATOR: "operator";
 }>;
 
 declare const PWR_GENERATE_OPS: 1;
@@ -953,196 +953,196 @@ declare const EFFECT_COLLAPSE_TIMER: 1002;
 
 declare const INVADER_CORE_HITS: 100000;
 declare const INVADER_CORE_CREEP_SPAWN_TIME: {
-    [level: number]: number;
-    0: 0;
-    1: 0;
-    2: 6;
-    3: 3;
-    4: 2;
-    5: 1;
+	[level: number]: number;
+	0: 0;
+	1: 0;
+	2: 6;
+	3: 3;
+	4: 2;
+	5: 1;
 };
 declare const INVADER_CORE_EXPAND_TIME: {
-    [level: number]: number;
-    1: 4000;
-    2: 3500;
-    3: 3000;
-    4: 2500;
-    5: 2000;
+	[level: number]: number;
+	1: 4000;
+	2: 3500;
+	3: 3000;
+	4: 2500;
+	5: 2000;
 };
 declare const INVADER_CORE_CONTROLLER_POWER: 2;
 declare const INVADER_CORE_CONTROLLER_DOWNGRADE: 5000;
 declare const STRONGHOLD_RAMPART_HITS: {
-    [level: number]: number;
-    0: 0;
-    1: 100000;
-    2: 200000;
-    3: 500000;
-    4: 1000000;
-    5: 2000000;
+	[level: number]: number;
+	0: 0;
+	1: 100000;
+	2: 200000;
+	3: 500000;
+	4: 1000000;
+	5: 2000000;
 };
 declare const STRONGHOLD_DECAY_TICKS: 75000;
 
 declare const POWER_INFO: Readonly<{
-    [PWR_GENERATE_OPS]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 50;
-        effect: [1, 2, 4, 6, 8];
-    };
-    [PWR_OPERATE_SPAWN]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 300;
-        duration: 1000;
-        range: 3;
-        ops: 100;
-        effect: [0.9, 0.7, 0.5, 0.35, 0.2];
-    };
-    [PWR_OPERATE_TOWER]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 10;
-        duration: 100;
-        range: 3;
-        ops: 10;
-        effect: [1.1, 1.2, 1.3, 1.4, 1.5];
-    };
-    [PWR_OPERATE_STORAGE]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 800;
-        duration: 1000;
-        range: 3;
-        ops: 100;
-        effect: [500000, 1000000, 2000000, 4000000, 7000000];
-    };
-    [PWR_OPERATE_LAB]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 50;
-        duration: 1000;
-        range: 3;
-        ops: 10;
-        effect: [2, 4, 6, 8, 10];
-    };
-    [PWR_OPERATE_EXTENSION]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 50;
-        range: 3;
-        ops: 2;
-        effect: [0.2, 0.4, 0.6, 0.8, 1.0];
-    };
-    [PWR_OPERATE_OBSERVER]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 400;
-        duration: [200, 400, 600, 800, 1000];
-        range: 3;
-        ops: 10;
-    };
-    [PWR_OPERATE_TERMINAL]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 500;
-        duration: 1000;
-        range: 3;
-        ops: 100;
-        effect: [0.9, 0.8, 0.7, 0.6, 0.5];
-    };
-    [PWR_DISRUPT_SPAWN]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 5;
-        range: 20;
-        ops: 10;
-        duration: [1, 2, 3, 4, 5];
-    };
-    [PWR_DISRUPT_TOWER]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 0;
-        duration: 5;
-        range: 50;
-        ops: 10;
-        effect: [0.9, 0.8, 0.7, 0.6, 0.5];
-    };
-    [PWR_DISRUPT_SOURCE]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 100;
-        range: 3;
-        ops: 100;
-        duration: [100, 200, 300, 400, 500];
-    };
-    [PWR_SHIELD]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        effect: [5000, 10000, 15000, 20000, 25000];
-        duration: 50;
-        cooldown: 20;
-        energy: 100;
-    };
-    [PWR_REGEN_SOURCE]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [10, 11, 12, 14, 22];
-        cooldown: 100;
-        duration: 300;
-        range: 3;
-        effect: [50, 100, 150, 200, 250];
-        period: 15;
-    };
-    [PWR_REGEN_MINERAL]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [10, 11, 12, 14, 22];
-        cooldown: 100;
-        duration: 100;
-        range: 3;
-        effect: [2, 4, 6, 8, 10];
-        period: 10;
-    };
-    [PWR_DISRUPT_TERMINAL]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [20, 21, 22, 23, 24];
-        cooldown: 8;
-        duration: 10;
-        range: 50;
-        ops: [50, 40, 30, 20, 10];
-    };
-    [PWR_FORTIFY]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 5;
-        range: 3;
-        ops: 5;
-        duration: [1, 2, 3, 4, 5];
-    };
-    [PWR_OPERATE_POWER]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [10, 11, 12, 14, 22];
-        cooldown: 800;
-        range: 3;
-        duration: 1000;
-        ops: 200;
-        effect: [1, 2, 3, 4, 5];
-    };
-    [PWR_OPERATE_CONTROLLER]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [20, 21, 22, 23, 24];
-        cooldown: 800;
-        range: 3;
-        duration: 1000;
-        ops: 200;
-        effect: [10, 20, 30, 40, 50];
-    };
-    [PWR_OPERATE_FACTORY]: {
-        className: typeof POWER_CLASS.OPERATOR;
-        level: [0, 2, 7, 14, 22];
-        cooldown: 800;
-        range: 3;
-        duration: 1000;
-        ops: 100;
-    };
+	[PWR_GENERATE_OPS]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 50;
+		effect: [1, 2, 4, 6, 8];
+	};
+	[PWR_OPERATE_SPAWN]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 300;
+		duration: 1000;
+		range: 3;
+		ops: 100;
+		effect: [0.9, 0.7, 0.5, 0.35, 0.2];
+	};
+	[PWR_OPERATE_TOWER]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 10;
+		duration: 100;
+		range: 3;
+		ops: 10;
+		effect: [1.1, 1.2, 1.3, 1.4, 1.5];
+	};
+	[PWR_OPERATE_STORAGE]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 800;
+		duration: 1000;
+		range: 3;
+		ops: 100;
+		effect: [500000, 1000000, 2000000, 4000000, 7000000];
+	};
+	[PWR_OPERATE_LAB]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 50;
+		duration: 1000;
+		range: 3;
+		ops: 10;
+		effect: [2, 4, 6, 8, 10];
+	};
+	[PWR_OPERATE_EXTENSION]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 50;
+		range: 3;
+		ops: 2;
+		effect: [0.2, 0.4, 0.6, 0.8, 1.0];
+	};
+	[PWR_OPERATE_OBSERVER]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 400;
+		duration: [200, 400, 600, 800, 1000];
+		range: 3;
+		ops: 10;
+	};
+	[PWR_OPERATE_TERMINAL]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 500;
+		duration: 1000;
+		range: 3;
+		ops: 100;
+		effect: [0.9, 0.8, 0.7, 0.6, 0.5];
+	};
+	[PWR_DISRUPT_SPAWN]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 5;
+		range: 20;
+		ops: 10;
+		duration: [1, 2, 3, 4, 5];
+	};
+	[PWR_DISRUPT_TOWER]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 0;
+		duration: 5;
+		range: 50;
+		ops: 10;
+		effect: [0.9, 0.8, 0.7, 0.6, 0.5];
+	};
+	[PWR_DISRUPT_SOURCE]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 100;
+		range: 3;
+		ops: 100;
+		duration: [100, 200, 300, 400, 500];
+	};
+	[PWR_SHIELD]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		effect: [5000, 10000, 15000, 20000, 25000];
+		duration: 50;
+		cooldown: 20;
+		energy: 100;
+	};
+	[PWR_REGEN_SOURCE]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [10, 11, 12, 14, 22];
+		cooldown: 100;
+		duration: 300;
+		range: 3;
+		effect: [50, 100, 150, 200, 250];
+		period: 15;
+	};
+	[PWR_REGEN_MINERAL]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [10, 11, 12, 14, 22];
+		cooldown: 100;
+		duration: 100;
+		range: 3;
+		effect: [2, 4, 6, 8, 10];
+		period: 10;
+	};
+	[PWR_DISRUPT_TERMINAL]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [20, 21, 22, 23, 24];
+		cooldown: 8;
+		duration: 10;
+		range: 50;
+		ops: [50, 40, 30, 20, 10];
+	};
+	[PWR_FORTIFY]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 5;
+		range: 3;
+		ops: 5;
+		duration: [1, 2, 3, 4, 5];
+	};
+	[PWR_OPERATE_POWER]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [10, 11, 12, 14, 22];
+		cooldown: 800;
+		range: 3;
+		duration: 1000;
+		ops: 200;
+		effect: [1, 2, 3, 4, 5];
+	};
+	[PWR_OPERATE_CONTROLLER]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [20, 21, 22, 23, 24];
+		cooldown: 800;
+		range: 3;
+		duration: 1000;
+		ops: 200;
+		effect: [10, 20, 30, 40, 50];
+	};
+	[PWR_OPERATE_FACTORY]: {
+		className: typeof POWER_CLASS.OPERATOR;
+		level: [0, 2, 7, 14, 22];
+		cooldown: 800;
+		range: 3;
+		duration: 1000;
+		ops: 100;
+	};
 }>;
 
 declare const BODYPARTS_ALL: BODYPART_CONSTANT[];
@@ -1152,11 +1152,11 @@ declare const RESOURCES_ALL: RESOURCE_CONSTANT[];
 declare const INTERSHARD_RESOURCES: [SUBSCRIPTION_TOKEN];
 
 declare const COMMODITIES: Readonly<{
-    [type: string]: Readonly<{
-        amount: number;
-        cooldown:number;
-        components: Readonly<{
-            [type: string]: number;
-        }>
-    }>;
+	[type: string]: Readonly<{
+		amount: number;
+		cooldown:number;
+		components: Readonly<{
+			[type: string]: number;
+		}>
+	}>;
 }>;
