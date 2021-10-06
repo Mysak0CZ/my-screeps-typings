@@ -100,7 +100,9 @@
 			{
 				"SwitchCase": 1,
 				"ignoredNodes": [
-					"ConditionalExpression"
+					"ConditionalExpression",
+					"TSTypeAnnotation",
+					"TSTypeParameterInstantiation"
 				]
 			}
 		],

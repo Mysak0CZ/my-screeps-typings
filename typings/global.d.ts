@@ -408,7 +408,7 @@ declare const Game: {
 		 */
 		getHistory(
 			resourceType?: RESOURCE_CONSTANT
-		): ReadonlyArray<{
+		): readonly {
 			resourceType: RESOURCE_CONSTANT;
 			/** format: `"2019-06-24"` */
 			date: string;
@@ -416,7 +416,7 @@ declare const Game: {
 			volume: number;
 			avgPrice: number;
 			stddevPrice: number;
-		}>;
+		}[];
 
 		/**
 		 * Retrieve info for specific market order.
@@ -505,13 +505,13 @@ declare const Game: {
 };
 
 /**
- * `InterShardMemory` object provides an interface for communicating between shards. Your script is executed separatedly 
- * on each shard, and their `Memory` objects are isolated from each other. In order to pass messages and 
+ * `InterShardMemory` object provides an interface for communicating between shards. Your script is executed separatedly
+ * on each shard, and their `Memory` objects are isolated from each other. In order to pass messages and
  * data between shards, you need to use `InterShardMemory` instead.
 
  * Every shard can own raw data segment that can be accessed by all other shards. A shard can write only to its own segment,
  * other shards' data is read-only.
- * 
+ *
  * This data has nothing to do with `Memory` contents, it's a separate data container.
  */
 declare const InterShardMemory: {
@@ -565,7 +565,7 @@ declare const PathFinder: {
 		/**
 		 * Creates a new CostMatrix containing 0's for all positions.
 		 */
-		new (): CostMatrix;
+		new(): CostMatrix;
 
 		/**
 		 * Static method which deserializes a new CostMatrix using the return value of `serialize`.
@@ -1073,106 +1073,106 @@ type Path = PathStep[];
  */
 type RoomEvent =
 	| {
-		  event: EVENT_ATTACK;
-		  objectId: string;
-		  data: {
-			  /** the target object ID */
-			  targetId: string;
-			  /** the amount of hits damaged */
-			  damage: number;
-			  /** one of the constants */
-			  attackType: EVENT_ATTACK_TYPE_CONSTANT;
-		  };
-	  }
+		event: EVENT_ATTACK;
+		objectId: string;
+		data: {
+			/** the target object ID */
+			targetId: string;
+			/** the amount of hits damaged */
+			damage: number;
+			/** one of the constants */
+			attackType: EVENT_ATTACK_TYPE_CONSTANT;
+		};
+	}
 	| {
-		  event: EVENT_OBJECT_DESTROYED;
-		  objectId: string;
-		  data: {
-			  /** The type of the destroyed object */
-			  type: "creep" | STRUCTURE_CONSTANT;
-		  };
-	  }
+		event: EVENT_OBJECT_DESTROYED;
+		objectId: string;
+		data: {
+			/** The type of the destroyed object */
+			type: "creep" | STRUCTURE_CONSTANT;
+		};
+	}
 	| {
-		  event: EVENT_ATTACK_CONTROLLER;
-		  objectId: string;
-		  data: {};
-	  }
+		event: EVENT_ATTACK_CONTROLLER;
+		objectId: string;
+		data: Record<string, never>;
+	}
 	| {
-		  event: EVENT_BUILD;
-		  objectId: string;
-		  data: {
-			  /** The target object ID */
-			  targetId: string;
-			  /** The amount of build progress gained */
-			  amount: number;
-			  /** The energy amount spent on the operation */
-			  energySpent: number;
-		  };
-	  }
+		event: EVENT_BUILD;
+		objectId: string;
+		data: {
+			/** The target object ID */
+			targetId: string;
+			/** The amount of build progress gained */
+			amount: number;
+			/** The energy amount spent on the operation */
+			energySpent: number;
+		};
+	}
 	| {
-		  event: EVENT_HARVEST;
-		  objectId: string;
-		  data: {
-			  /** The target object ID */
-			  targetId: string;
-			  /** The amount of resource harvested */
-			  amount: number;
-		  };
-	  }
+		event: EVENT_HARVEST;
+		objectId: string;
+		data: {
+			/** The target object ID */
+			targetId: string;
+			/** The amount of resource harvested */
+			amount: number;
+		};
+	}
 	| {
-		  event: EVENT_HEAL;
-		  objectId: string;
-		  data: {
-			  /** The target object ID */
-			  targetId: string;
-			  /** The amount of hits healed */
-			  amount: number;
-			  /** One of the constants */
-			  healType: EVENT_HEAL_TYPE_CONSTANT;
-		  };
-	  }
+		event: EVENT_HEAL;
+		objectId: string;
+		data: {
+			/** The target object ID */
+			targetId: string;
+			/** The amount of hits healed */
+			amount: number;
+			/** One of the constants */
+			healType: EVENT_HEAL_TYPE_CONSTANT;
+		};
+	}
 	| {
-		  event: EVENT_REPAIR;
-		  objectId: string;
-		  data: {
-			  /** The target object ID */
-			  targetId: string;
-			  /** The amount of hits repaired */
-			  amount: number;
-			  /** The energy amount spent on the operation */
-			  energySpent: number;
-		  };
-	  }
+		event: EVENT_REPAIR;
+		objectId: string;
+		data: {
+			/** The target object ID */
+			targetId: string;
+			/** The amount of hits repaired */
+			amount: number;
+			/** The energy amount spent on the operation */
+			energySpent: number;
+		};
+	}
 	| {
-		  event: EVENT_RESERVE_CONTROLLER;
-		  objectId: string;
-		  data: {
-			  /** The amount of reservation time gained */
-			  amount: number;
-		  };
-	  }
+		event: EVENT_RESERVE_CONTROLLER;
+		objectId: string;
+		data: {
+			/** The amount of reservation time gained */
+			amount: number;
+		};
+	}
 	| {
-		  event: EVENT_UPGRADE_CONTROLLER;
-		  objectId: string;
-		  data: {
-			  /** The amount of control points gained */
-			  amount: number;
-			  /** The energy amount spent on the operation */
-			  energySpent: number;
-		  };
-	  }
+		event: EVENT_UPGRADE_CONTROLLER;
+		objectId: string;
+		data: {
+			/** The amount of control points gained */
+			amount: number;
+			/** The energy amount spent on the operation */
+			energySpent: number;
+		};
+	}
 	| {
-		  event: EVENT_EXIT;
-		  objectId: string;
-		  data: {
-			  /** The name of the target room */
-			  room: RoomName;
-			  /** The coordinates in another room where the creep has appeared */
-			  x: number;
-			  /** The coordinates in another room where the creep has appeared */
-			  y: number;
-		  };
-	  };
+		event: EVENT_EXIT;
+		objectId: string;
+		data: {
+			/** The name of the target room */
+			room: RoomName;
+			/** The coordinates in another room where the creep has appeared */
+			x: number;
+			/** The coordinates in another room where the creep has appeared */
+			y: number;
+		};
+	};
 type _allOwnedStructures =
 	| StructureController
 	| StructureExtension
@@ -2541,13 +2541,11 @@ declare class Room {
 	/** A RoomVisual object for this room. You can use this object to draw simple shapes (lines, circles, text labels) in the room. */
 	readonly visual: RoomVisual;
 
-	static readonly Terrain: {
-		/**
-		 * Creates a new `Terrain` of room by its name.
-		 * `Terrain` objects can be constructed for any room in the world even if you have no access to it.
-		 */
-		new (roomName: RoomName): RoomTerrain;
-	};
+	/**
+	 * Creates a new `Terrain` of room by its name.
+	 * `Terrain` objects can be constructed for any room in the world even if you have no access to it.
+	 */
+	static readonly Terrain: new(roomName: RoomName) => RoomTerrain;
 
 	/**
 	 * erialize a path array into a short string representation, which is suitable to store in memory.
@@ -2784,14 +2782,14 @@ declare class Room {
  */
 declare class RoomObject {
 	/** Applied effects, an array of objects with the following properties: */
-	readonly effects: ReadonlyArray<{
+	readonly effects: readonly {
 		/** Effect ID of the applied effect. Can be either natural effect ID or Power ID. */
 		effect: number;
 		/** Power level of the applied effect. Absent if the effect is not a Power effect. */
 		level?: number;
 		/** How many ticks will the effect last. */
 		ticksRemaining: number;
-	}>;
+	}[];
 
 	/** An object representing the position of this object in the room. */
 	readonly pos: RoomPosition;
@@ -3447,11 +3445,11 @@ declare class StructureController extends OwnedStructure {
 	/** An object with the controller reservation info if present: */
 	readonly reservation:
 		| {
-			  /** The name of a player who reserved this controller. */
-			  readonly username: string;
-			  /** The amount of game ticks when the reservation will end. */
-			  readonly ticksToEnd: number;
-		  }
+			/** The name of a player who reserved this controller. */
+			readonly username: string;
+			/** The amount of game ticks when the reservation will end. */
+			readonly ticksToEnd: number;
+		}
 		| undefined;
 
 	/** How many ticks of safe mode remaining, or undefined. */
@@ -3466,15 +3464,15 @@ declare class StructureController extends OwnedStructure {
 	/** An object with the controller sign info if present: */
 	readonly sign:
 		| {
-			  /** The name of a player who signed this controller. */
-			  username: string;
-			  /** The sign text. */
-			  text: string;
-			  /** The sign time in game ticks. */
-			  time: number;
-			  /** The sign real date. */
-			  datetime: Date;
-		  }
+			/** The name of a player who signed this controller. */
+			username: string;
+			/** The sign text. */
+			text: string;
+			/** The sign time in game ticks. */
+			time: number;
+			/** The sign real date. */
+			datetime: Date;
+		}
 		| undefined;
 
 	/**

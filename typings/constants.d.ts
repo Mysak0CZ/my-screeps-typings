@@ -232,7 +232,7 @@ declare const OBSTACLE_OBJECT_TYPES: [
 	"terminal",
 	"nuker",
 	"factory",
-	"invaderCore"
+	"invaderCore",
 ];
 
 declare const MOVE: "move";
@@ -927,7 +927,7 @@ declare const PWR_OPERATE_POWER: 16;
 declare const PWR_FORTIFY: 17;
 declare const PWR_OPERATE_CONTROLLER: 18;
 declare const PWR_OPERATE_FACTORY: 19;
-type PWR_CONSTANT = 
+type PWR_CONSTANT =
 | typeof PWR_GENERATE_OPS
 | typeof PWR_OPERATE_SPAWN
 | typeof PWR_OPERATE_TOWER
