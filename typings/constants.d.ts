@@ -613,6 +613,14 @@ declare const FLAGS_LIMIT: 10000;
 
 declare const SUBSCRIPTION_TOKEN: "token";
 type SUBSCRIPTION_TOKEN = typeof SUBSCRIPTION_TOKEN;
+declare const CPU_UNLOCK: "cpuUnlock";
+type CPU_UNLOCK = typeof CPU_UNLOCK;
+declare const PIXEL: "pixel";
+type PIXEL = typeof PIXEL;
+declare const ACCESS_KEY: "accessKey";
+type ACCESS_KEY = typeof ACCESS_KEY;
+
+declare const PIXEL_CPU_COST: 10000;
 
 declare const RESOURCE_ENERGY: "energy";
 declare const RESOURCE_POWER: "power";
@@ -928,25 +936,25 @@ declare const PWR_FORTIFY: 17;
 declare const PWR_OPERATE_CONTROLLER: 18;
 declare const PWR_OPERATE_FACTORY: 19;
 type PWR_CONSTANT =
-| typeof PWR_GENERATE_OPS
-| typeof PWR_OPERATE_SPAWN
-| typeof PWR_OPERATE_TOWER
-| typeof PWR_OPERATE_STORAGE
-| typeof PWR_OPERATE_LAB
-| typeof PWR_OPERATE_EXTENSION
-| typeof PWR_OPERATE_OBSERVER
-| typeof PWR_OPERATE_TERMINAL
-| typeof PWR_DISRUPT_SPAWN
-| typeof PWR_DISRUPT_TOWER
-| typeof PWR_DISRUPT_SOURCE
-| typeof PWR_SHIELD
-| typeof PWR_REGEN_SOURCE
-| typeof PWR_REGEN_MINERAL
-| typeof PWR_DISRUPT_TERMINAL
-| typeof PWR_OPERATE_POWER
-| typeof PWR_FORTIFY
-| typeof PWR_OPERATE_CONTROLLER
-| typeof PWR_OPERATE_FACTORY;
+	| typeof PWR_GENERATE_OPS
+	| typeof PWR_OPERATE_SPAWN
+	| typeof PWR_OPERATE_TOWER
+	| typeof PWR_OPERATE_STORAGE
+	| typeof PWR_OPERATE_LAB
+	| typeof PWR_OPERATE_EXTENSION
+	| typeof PWR_OPERATE_OBSERVER
+	| typeof PWR_OPERATE_TERMINAL
+	| typeof PWR_DISRUPT_SPAWN
+	| typeof PWR_DISRUPT_TOWER
+	| typeof PWR_DISRUPT_SOURCE
+	| typeof PWR_SHIELD
+	| typeof PWR_REGEN_SOURCE
+	| typeof PWR_REGEN_MINERAL
+	| typeof PWR_DISRUPT_TERMINAL
+	| typeof PWR_OPERATE_POWER
+	| typeof PWR_FORTIFY
+	| typeof PWR_OPERATE_CONTROLLER
+	| typeof PWR_OPERATE_FACTORY;
 
 declare const EFFECT_INVULNERABILITY: 1001;
 declare const EFFECT_COLLAPSE_TIMER: 1002;
@@ -1149,12 +1157,14 @@ declare const BODYPARTS_ALL: BODYPART_CONSTANT[];
 
 declare const RESOURCES_ALL: RESOURCE_CONSTANT[];
 
-declare const INTERSHARD_RESOURCES: [SUBSCRIPTION_TOKEN];
+declare const INTERSHARD_RESOURCES: [SUBSCRIPTION_TOKEN, CPU_UNLOCK, PIXEL, ACCESS_KEY];
+
+type INTERSHARD_RESOURCE = SUBSCRIPTION_TOKEN | CPU_UNLOCK | PIXEL | ACCESS_KEY;
 
 declare const COMMODITIES: Readonly<{
 	[type: string]: Readonly<{
 		amount: number;
-		cooldown:number;
+		cooldown: number;
 		components: Readonly<{
 			[type: string]: number;
 		}>

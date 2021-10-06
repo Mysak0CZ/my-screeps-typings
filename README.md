@@ -1,7 +1,7 @@
 # Screeps-typings
-TypeScript declarations for the game Screeps. In-game version "Decorations update" 
+TypeScript declarations for the game Screeps. In-game version "2021-07-28" 
 
-Documentation revision `5892dd0`
+Documentation revision `ec6384988d35b85d5f6ca77beb4ff1946ac5a19a`
 
 > **These are not official typings for the Screeps game**
 

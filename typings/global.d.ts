@@ -94,7 +94,7 @@ declare const Game: {
 		unlock(): OK | ERR_NOT_ENOUGH_RESOURCES | ERR_FULL;
 
 		/**
-		 * Generate 1 pixel resource unit for 5000 CPU from your bucket.
+		 * Generate 1 pixel resource unit for 10000 CPU from your bucket.
 		 * @returns {0} `OK` - The operation has been scheduled successfully.
 		 * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - Your bucket does not have enough CPU.
 		 */
@@ -267,6 +267,90 @@ declare const Game: {
 		getRoomStatus(
 			roomName: string
 		): { status: "normal" | "closed" | "novice" | "respawn"; timestamp: number | null } | undefined;
+
+		/**
+		 * Map visuals provide a way to show various visual debug info on the game map.
+		 * You can use the `Game.map.visual` object to draw simple shapes that are visible only to you.
+		 *
+		 * Map visuals are not stored in the database, their only purpose is to display something in your browser.
+		 * All drawings will persist for one tick and will disappear if not updated.
+		 * All `Game.map.visual` calls have no added CPU cost (their cost is natural and mostly related to simple `JSON.serialize` calls).
+		 * However, there is a usage limit: you cannot post more than 1000 KB of serialized data.
+		 *
+		 * All draw coordinates are measured in global game coordinates (`RoomPosition`).
+		 */
+		readonly visual: {
+			/**
+			 * Draw a line.
+			 * @param pos1 The start position object.
+			 * @param pos2 The finish position object.
+			 * @param style An object with the following properties
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			line(pos1: RoomPosition, pos2: RoomPosition, style?: LineStyle): typeof Game.map.visual;
+
+			/**
+			 * Draw a circle.
+			 * @param pos The position object of the center.
+			 * @param style An object with the following properties
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			circle(pos: RoomPosition, style?: CircleStyle): typeof Game.map.visual;
+
+			/**
+			 * Draw a rectangle.
+			 * @param topLeftPos The position object of the top-left corner.
+			 * @param width The width of the rectangle.
+			 * @param height The height of the rectangle.
+			 * @param style An object with the following properties
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			rect(topLeftPos: RoomPosition, width: number, height: number, style?: RectStyle): typeof Game.map.visual;
+
+			/**
+			 * Draw a polyline.
+			 * @param points An array of points. Every item should be a `RoomPosition` object.
+			 * @param style An object with the following properties
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			poly(points: RoomPosition[], style?: PolyStyle): typeof Game.map.visual;
+
+			/**
+			 * Draw a text label. You can use any valid Unicode characters, including emoji.
+			 * @see http://unicode.org/emoji/charts/emoji-style.txt
+			 * @param text The text message.
+			 * @param pos The position object of the label baseline.
+			 * @param style An object with the following properties
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			text(text: string, pos: RoomPosition, style?: TextStyle2): typeof Game.map.visual;
+
+			/**
+			 * Remove all visuals from the map.
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			clear(): typeof Game.map.visual;
+
+			/**
+			 * Get the stored size of all visuals added on the map in the current tick.
+			 * It must not exceed 1024,000 (1000 KB).
+			 * @returns The size of the visuals in bytes.
+			 */
+			getSize(): number;
+
+			/**
+			 * Returns a compact representation of all visuals added on the map in the current tick.
+			 * @returns A string with visuals data. There's not much you can do with the string besides store them for later.
+			 */
+			export(): string;
+
+			/**
+			 * Add previously exported (with `Game.map.visual.export`) map visuals to the map visual data of the current tick.
+			 * @param val The string returned from `Game.map.visual.export`.
+			 * @returns The `MapVisual` object itself, so that you can chain calls.
+			 */
+			import(val: string): typeof Game.map.visual;
+		}
 	};
 
 	/**
@@ -344,10 +428,10 @@ declare const Game: {
 			/** The order type, either `ORDER_SELL` or `ORDER_BUY`. */
 			type: ORDER_SELL | ORDER_BUY;
 			/**
-			 * Either one of the `RESOURCE_*` constants or `SUBSCRIPTION_TOKEN`.
+			 * Either one of the `RESOURCE_*` constants one of account-bound resources (See `INTERSHARD_RESOURCES` constant).
 			 * If your Terminal doesn't have the specified resource, the order will be temporary inactive.
 			 */
-			resourceType: RESOURCE_CONSTANT | SUBSCRIPTION_TOKEN;
+			resourceType: RESOURCE_CONSTANT | INTERSHARD_RESOURCE;
 			/** The price for one resource unit in credits. Can be a decimal number.*/
 			price: number;
 			/** The amount of resources to be traded in total. */
@@ -355,7 +439,7 @@ declare const Game: {
 			/**
 			 * The room where your order will be created.
 			 * You must have your own Terminal structure in this room, otherwise the created order will be temporary inactive.
-			 * This argument is not used when `resourceType` equals to `SUBSCRIPTION_TOKEN`.
+			 * This argument is not used when `resourceType` is one of account-bound resources (See `INTERSHARD_RESOURCES` constant).
 			 */
 			roomName?: RoomName;
 		}): OK | ERR_NOT_OWNER | ERR_NOT_ENOUGH_RESOURCES | ERR_FULL | ERR_INVALID_ARGS;
@@ -368,7 +452,7 @@ declare const Game: {
 		 * You cannot execute more than 10 deals during one tick.
 		 * @param orderId The order ID as provided in `Game.market.getAllOrders`.
 		 * @param amount The amount of resources to transfer.
-		 * @param yourRoomName The name of your room which has to contain an active Terminal with enough amount of energy. This argument is not used when the order resource type equals to `SUBSCRIPTION_TOKEN`.
+		 * @param yourRoomName The name of your room which has to contain an active Terminal with enough amount of energy. This argument is not used when the order resource type is one of account-bound resources (See `INTERSHARD_RESOURCES` constant).
 		 * @returns {0} `OK` - The operation has been scheduled successfully.
 		 * @returns {-1} `ERR_NOT_OWNER` - You don't have a terminal in the target room.
 		 * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - You don't have enough credits or resource units.
@@ -705,8 +789,8 @@ interface Order {
 	createdTimestamp?: number;
 	/** Either `ORDER_SELL` or `ORDER_BUY`. */
 	type: ORDER_BUY | ORDER_SELL;
-	/** Either one of the `RESOURCE_*` constants or `SUBSCRIPTION_TOKEN`. */
-	resourceType: RESOURCE_CONSTANT | SUBSCRIPTION_TOKEN;
+	/** Either one of the `RESOURCE_*` constants or one of account-bound resources (See `INTERSHARD_RESOURCES` constant). */
+	resourceType: RESOURCE_CONSTANT | INTERSHARD_RESOURCE;
 	/** The room where this order is placed. */
 	roomName: RoomName;
 	/** Currently available amount to trade. */
@@ -1003,6 +1087,31 @@ interface TextStyle {
 	/** Text align, either `center`, `left`, or `right`. Default is `center`. */
 	align?: "center" | "left" | "right";
 	/** Opacity value, default is 1.0. */
+	opacity?: number;
+}
+
+interface TextStyle2 {
+	/** Font color in the following format: `#ffffff` (hex triplet). Default is #ffffff. */
+	color?: string;
+	/** The font family, default is `sans-serif` */
+	fontFamily?: string;
+	/** The font size in game coordinates, default is 10 */
+	fontSize?: number;
+	/** The font style ('normal', 'italic' or 'oblique') */
+	fontStyle?: "normal" | "italic" | "oblique";
+	/** The font variant ('normal' or 'small-caps') */
+	fontVariant?: "normal" | "small-caps";
+	/** Stroke color in the following format: `#ffffff` (hex triplet). Default is undefined (no stroke). */
+	stroke?: string;
+	/** Stroke width, default is 0.15. */
+	strokeWidth?: number;
+	/** Background color in the following format: `#ffffff` (hex triplet). Default is undefined (no background). When background is enabled, text vertical align is set to middle (default is baseline).*/
+	backgroundColor?: string;
+	/** Background rectangle padding, default is 2. */
+	backgroundPadding?: number;
+	/** Text align, either `center`, `left`, or `right`. Default is `center`. */
+	align?: "center" | "left" | "right";
+	/** Opacity value, default is 0.5. */
 	opacity?: number;
 }
 
@@ -1930,7 +2039,7 @@ declare class Flag extends RoomObject {
 	/** A shorthand to `Memory.flags[flag.name]`. You can use it for quick access the flag's specific memory data object. */
 	readonly memory: FlagMemory;
 
-	/** Flag’s name. You can choose the name while creating a new flag, and it cannot be changed later. This name is a hash key to access the flag via the `Game.flags` object. The maximum name length is 60 charactes. */
+	/** Flag’s name. You can choose the name while creating a new flag, and it cannot be changed later. This name is a hash key to access the flag via the `Game.flags` object. The maximum name length is 100 charactes. */
 	readonly name: string;
 
 	/** Flag secondary color. One of the `COLOR_*` constants. */
@@ -2047,13 +2156,14 @@ declare class PowerCreep extends RoomObject {
 	 * It will be added in an unspawned state, use spawn method to `spawn` it in the world.
 	 *
 	 * You need one free Power Level in your account to perform this action.
-	 * @param name The name of the new power creep.
+	 * @param name The name of the new power creep. The name length limit is 100 characters.
 	 * @param className The class of the new power creep, one of the `POWER_CLASS` constants.
 	 * @returns {0} `OK` - The operation has been scheduled successfully.
 	 * @returns {-3} `ERR_NAME_EXISTS` - A power creep with the specified name already exists.
 	 * @returns {-6} `ERR_NOT_ENOUGH_RESOURCES` - You don't have free Power Levels in your account.
+	 * @returns {-10} `ERR_INVALID_ARGS` - The provided power creep name is exceeds the limit, or the power creep class is invalid.
 	 */
-	static create(name: string, className: string): OK | ERR_NAME_EXISTS | ERR_NOT_ENOUGH_RESOURCES;
+	static create(name: string, className: string): OK | ERR_NAME_EXISTS | ERR_NOT_ENOUGH_RESOURCES | ERR_INVALID_ARGS;
 
 	/**
 	 * An alias for `Creep.store`.
@@ -2545,7 +2655,7 @@ declare class Room {
 	 * Creates a new `Terrain` of room by its name.
 	 * `Terrain` objects can be constructed for any room in the world even if you have no access to it.
 	 */
-	static readonly Terrain: new(roomName: RoomName) => RoomTerrain;
+	static readonly Terrain: new (roomName: RoomName) => RoomTerrain;
 
 	/**
 	 * erialize a path array into a short string representation, which is suitable to store in memory.
@@ -2566,7 +2676,7 @@ declare class Room {
 	 * @param x The X position.
 	 * @param y The Y position.
 	 * @param structureType One of the `STRUCTURE_*` constants.
-	 * @param name The name of the structure, for structures that support it (currently only spawns).
+	 * @param name The name of the structure, for structures that support it (currently only spawns). The name length limit is 100 characters.
 	 * @returns {0} `OK` - The operation has been scheduled successfully.
 	 * @returns {-1} `ERR_NOT_OWNER` - The room is claimed or reserved by a hostile player.
 	 * @returns {-7} `ERR_INVALID_TARGET` - The structure cannot be placed at the specified location.
@@ -2613,13 +2723,13 @@ declare class Room {
 	 * Create new Flag at the specified location.
 	 * @param x The X position.
 	 * @param y The Y position.
-	 * @param name The name of a new flag. It should be unique, i.e. the `Game.flags` object should not contain another flag with the same name (hash key). If not defined, a random name will be generated. The maximum length is 60 characters.
+	 * @param name The name of a new flag. It should be unique, i.e. the `Game.flags` object should not contain another flag with the same name (hash key). If not defined, a random name will be generated. The maximum length is 100 characters.
 	 * @param color The color of a new flag. Should be one of the `COLOR_*` constants. The default value is `COLOR_WHITE`.
 	 * @param secondaryColor The secondary color of a new flag. Should be one of the `COLOR_*` constants. The default value is equal to `color`.
 	 * @returns {string} The name of a new flag
 	 * @returns {-3} `ERR_NAME_EXISTS` - There is a flag with the same name already.
 	 * @returns {-8} `ERR_FULL` - You have too many flags. The maximum number of flags per player is 10000.
-	 * @returns {-10} `ERR_INVALID_ARGS` - The location or the color constant is incorrect.
+	 * @returns {-10} `ERR_INVALID_ARGS` - The location or the name or the color constant is incorrect.
 	 */
 	createFlag(
 		x: number,
@@ -2631,13 +2741,13 @@ declare class Room {
 	/**
 	 * Create new Flag at the specified location.
 	 * @param pos Can be a RoomPosition object or any object containing RoomPosition.
-	 * @param name The name of a new flag. It should be unique, i.e. the `Game.flags` object should not contain another flag with the same name (hash key). If not defined, a random name will be generated. The maximum length is 60 characters.
+	 * @param name The name of a new flag. It should be unique, i.e. the `Game.flags` object should not contain another flag with the same name (hash key). If not defined, a random name will be generated. The maximum length is 100 characters.
 	 * @param color The color of a new flag. Should be one of the `COLOR_*` constants. The default value is `COLOR_WHITE`.
 	 * @param secondaryColor The secondary color of a new flag. Should be one of the `COLOR_*` constants. The default value is equal to `color`.
 	 * @returns {string} The name of a new flag
 	 * @returns {-3} `ERR_NAME_EXISTS` - There is a flag with the same name already.
 	 * @returns {-8} `ERR_FULL` - You have too many flags. The maximum number of flags per player is 10000.
-	 * @returns {-10} `ERR_INVALID_ARGS` - The location or the color constant is incorrect.
+	 * @returns {-10} `ERR_INVALID_ARGS` - The location or the name or the color constant is incorrect.
 	 */
 	createFlag(
 		pos: RoomPositionLike,
@@ -3262,6 +3372,19 @@ declare class RoomVisual {
 	 * @returns The size of the visuals in bytes.
 	 */
 	getSize(): number;
+
+	/**
+	 * Returns a compact representation of all visuals added in the room in the current tick.
+	 * @returns A string with visuals data. There's not much you can do with the string besides store them for later.
+	 */
+	export(): string;
+
+	/**
+	 * Add previously exported (with `RoomVisual.export`) room visuals to the room visual data of the current tick.
+	 * @param val The string returned from `RoomVisual.export`.
+	 * @returns The `RoomVisual` object itself, so that you can chain calls.
+	 */
+	import(val: string): this;
 }
 
 /**
@@ -4119,7 +4242,7 @@ declare class StructureSpawn extends OwnedStructure {
 	 * Start the creep spawning process.
 	 * The required energy amount can be withdrawn from all spawns and extensions in the room.
 	 * @param body An array describing the new creep’s body. Should contain 1 to 50 elements
-	 * @param name The name of a new creep. It must be a unique creep name, i.e. the `Game.creeps` object should not contain another creep with the same name (hash key).
+	 * @param name The name of a new creep. The name length limit is 100 characters. It must be a unique creep name, i.e. the `Game.creeps` object should not contain another creep with the same name (hash key).
 	 * @param opts An object with additional options for the spawning process.
 	 * @returns {0} `OK` - The operation has been scheduled successfully.
 	 * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of this spawn.
@@ -4151,6 +4274,7 @@ declare class StructureSpawn extends OwnedStructure {
 	/**
 	 * Increase the remaining time to live of the target creep.
 	 * The target should be at adjacent square.
+	 * The target should not have `CLAIM` body parts.
 	 * The spawn should not be busy with the spawning process.
 	 * Each execution increases the creep's timer by amount of ticks according to this formula:
 	 *
@@ -4166,7 +4290,7 @@ declare class StructureSpawn extends OwnedStructure {
 	 * @returns {-1} `ERR_NOT_OWNER` - You are not the owner of the spawn, or the creep.
 	 * @returns {-4} `ERR_BUSY` - The spawn is spawning another creep.
 	 * @returns {-6} `ERR_NOT_ENOUGH_ENERGY` - The spawn does not have enough energy.
-	 * @returns {-7} `ERR_INVALID_TARGET` - The specified target object is not a creep.
+	 * @returns {-7} `ERR_INVALID_TARGET` - The specified target object is not a creep, or the creep has `CLAIM` body part.
 	 * @returns {-8} `ERR_FULL` - The target creep's time to live timer is full.
 	 * @returns {-9} `ERR_NOT_IN_RANGE` - The target creep is too far away.
 	 * @returns {-14} `ERR_RCL_NOT_ENOUGH` - Your Room Controller level is insufficient to use this spawn.
